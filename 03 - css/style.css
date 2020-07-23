@@ -1,0 +1,35 @@
+/* Definição de estilo pelo tipo de elemento */
+body {
+    margin: 10px;
+    font-size: 20px;
+}
+div {
+    margin: 10px;
+}
+
+/* Definição de estilo pelo identificador */
+#d1 {
+    color: #dd2271
+}
+
+/* Definição de estilo pela classe */
+.div-especial {
+    background-color: darkgray;
+}
+
+/* Seletores avançados*/
+body > p {
+    font-weight: 700;
+}
+#d1 p {
+    font-style: italic;
+}
+body > p {
+    font-weight: 700;
+}
+#p1 ~ p {
+    text-transform: uppercase;
+}
+p[title] {
+    text-align: right;
+}
