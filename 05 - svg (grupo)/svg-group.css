@@ -1,0 +1,11 @@
+circle{
+  stroke: gray;
+  stroke-width: 2px;
+  fill: #bfbf00;
+}
+
+rect{
+  stroke: black; 
+  stroke-width: 1px;
+  fill: red; 
+}
