@@ -10,7 +10,7 @@ e-mail: mlage@ic.uff.br
 sala: 534
 
 ## Aulas
-Segundas e sextas de 14 às 16.
+Segundas e quartas de 09 às 11h.
 
 ## Instruções
 Para rodar os códigos contidos neste repositório, recomendo a utilização da IDE [Visual Studio Code](https://code.visualstudio.com/) com a extensão [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) instalada.
