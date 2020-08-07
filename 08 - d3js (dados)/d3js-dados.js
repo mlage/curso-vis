@@ -1,4 +1,4 @@
-class D3jsData {
+class D3jsDados {
   constructor() {
     this.circles = [];
     this.squares = [];
@@ -87,7 +87,7 @@ class D3jsData {
 }
 
 window.onload = () => {
-  let app = new D3jsData();
+  let app = new D3jsDados();
   
   setInterval(() => { 
     let nc = Math.floor(Math.random() * 50);
