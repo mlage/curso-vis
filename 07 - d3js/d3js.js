@@ -2,7 +2,7 @@ class D3js {
   constructor() {}
 
   createSvg() {
-    var node = d3.select("#main")
+    let node = d3.select("#main")
       .append("svg")
       .attr('x', 10)
       .attr('y', 10)
@@ -13,7 +13,7 @@ class D3js {
   }
 
   createCircle(svg, x, y, r) {
-    var circle = svg.append('circle')
+    let circle = svg.append('circle')
         .attr('cx', x)
         .attr('cy', y)
         .attr('r' , r);

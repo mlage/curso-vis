@@ -7,7 +7,7 @@ class D3jsDados {
   }
 
   createSvg() {
-    var node = d3.select("#main")
+    let node = d3.select("#main")
       .append("svg")
       .attr('x', 10)
       .attr('y', 10)
@@ -79,7 +79,7 @@ class D3jsDados {
     this.circles = circles;
     this.squares = squares;
 
-    var svg = d3.select("svg")    
+    let svg = d3.select("svg")    
     
     this.createCircles(svg);
     this.createSquares(svg);
