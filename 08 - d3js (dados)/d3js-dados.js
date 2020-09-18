@@ -71,10 +71,6 @@ class D3jsDados {
       .attr('height', d => d.l)
   }
 
-  getRandomColor() {
-    return 'rgb(' + Math.floor(Math.random()*256) + ',' + Math.floor(Math.random()*256) + ',' + Math.floor(Math.random()*256) + ')';
-  }
-
   run(circles, squares) {
     this.circles = circles;
     this.squares = squares;

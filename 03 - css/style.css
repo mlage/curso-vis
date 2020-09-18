@@ -45,9 +45,6 @@ body > p {
 #d1 p {
     font-style: italic;
 }
-body > p {
-    font-weight: 700;
-}
 #p1 ~ p {
     text-transform: uppercase;
 }

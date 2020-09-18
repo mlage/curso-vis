@@ -18,7 +18,7 @@ for (let id = 0; id < x.length; id++) {
 let d = document.getElementById("vis");
 
 d.style.backgroundColor = "#bfbf";
-d.style.color = "#aa";
+d.style.color = "#aaa";
 //--------------------------------------------------
 
 
@@ -45,4 +45,5 @@ s.innerHTML = "<h1>Novo Texto...</h1>";
 
 let h = document.querySelectorAll("h1");
 h[0].textContent = "Tag de título";
+
 //--------------------------------------------------

@@ -4,7 +4,7 @@ circle{
     fill: #bfbf00;
   }
   
-  rect{
+rect{
     stroke: black; 
     stroke-width: 2px;
     fill: red; 
