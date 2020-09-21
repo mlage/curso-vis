@@ -1,4 +1,4 @@
-class D3jsCsv {
+class D3jsJson {
   constructor() {
     this.circles = [];
 
@@ -49,7 +49,7 @@ class D3jsCsv {
 }
 
 async function main() {
-  let app = new D3jsCsv();
+  let app = new D3jsJson();
   
   await app.loadJSON('../00 - datasets/superstore.json');
   app.render()

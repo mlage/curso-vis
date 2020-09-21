@@ -51,7 +51,7 @@ async function main() {
   let app = new D3jsCsv();
   
   await app.loadCSV('../00 - datasets/superstore.csv');
-  app.render()
+  app.render();
 }
 
 main();

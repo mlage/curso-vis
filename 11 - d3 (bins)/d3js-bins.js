@@ -23,11 +23,9 @@ class D3jsBins {
   async loadCSV(file) {
     this.data = await d3.csv(file, d => {
       return {
-        val: +d.Sales,
+        val: +d.Profit,
       }
     });
-
-    this.data = this.data.slice(0, 1000);
 
     this.x = d3.extent(this.data, d => {
       return d.val;
