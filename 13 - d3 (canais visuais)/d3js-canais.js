@@ -19,8 +19,8 @@ class Canais {
       .append("svg")
       .attr('x', 10)
       .attr('y', 10)
-      .attr('width', this.config.width + this.config.left)
-      .attr('height', this.config.height + this.config.top);
+      .attr('width', this.config.width + this.config.left + this.config.right)
+      .attr('height', this.config.height + this.config.top + this.config.bottom);
   }
 
   createMargins() {
