@@ -34,7 +34,8 @@ class Canais {
       return {
         cx: +d.Sales,
         cy: +d.Profit,
-        cl: d.Discount,
+        col: d.Discount,
+        cat: d.Category,
         r: 4
       }
     });
@@ -49,13 +50,20 @@ class Canais {
     let yExtent = d3.extent(this.circles, d => {
       return d.cy;
     });
-    let cExtent = d3.extent(this.circles, d => {
-      return d.cl;
+    let colExtent = d3.extent(this.circles, d => {
+      return d.col;
     });
+
+    const cats = this.circles.map(d => {
+      return d.cat;
+    });
+    let catExtent = d3.union(cats);
 
     this.xScale = d3.scaleLinear().domain(xExtent).nice().range([0, this.config.width]);
     this.yScale = d3.scaleLinear().domain(yExtent).nice().range([this.config.height, 0]);
-    this.cScale = d3.scaleSequential(d3.interpolateOrRd).domain(cExtent);
+
+    this.colScale = d3.scaleSequential(d3.interpolateOrRd).domain(colExtent);
+    this.catScale = d3.scaleOrdinal().domain(catExtent).range(d3.schemeTableau10);
   }
 
   renderCircles() {
@@ -65,7 +73,8 @@ class Canais {
       .attr('cx', d => this.xScale(d.cx))
       .attr('cy', d => this.yScale(d.cy))
       .attr('r' , d => d.r)
-      .attr('fill', d => this.cScale(d.cl));
+      .attr('fill', d => this.colScale(d.col));
+      // .attr('fill', d => this.catScale(d.cat));
   }
 }
 
