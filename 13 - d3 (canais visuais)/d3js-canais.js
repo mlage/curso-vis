@@ -34,7 +34,7 @@ class Canais {
       return {
         cx: +d.Sales,
         cy: +d.Profit,
-        col: d.Discount,
+        col:+d.Discount,
         cat: d.Category,
         r: 4
       }
