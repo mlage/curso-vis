@@ -1,5 +1,5 @@
 import { Dados } from './dados.js'
-import { Bar   } from './grafico.js'
+import {  Bar  } from './grafico.js'
 
 async function main() {
   let dados = new Dados();
