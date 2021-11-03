@@ -1,4 +1,4 @@
-## Curso de Visualização de Dados (PGC, IC-UFF, 2020.2)
+## Curso de Visualização de Dados (PGC, IC-UFF, 2021.2)
 
 Códigos utilizados no curso de visualização de dados oferecido pelo prof. Marcos Lage para o Programa de Pós-Graduação em Computação do Instituto de Computação da UFF.
 
@@ -6,8 +6,6 @@ Códigos utilizados no curso de visualização de dados oferecido pelo prof. Mar
 website: www.ic.uff.br/~mlage
 
 e-mail: mlage@ic.uff.br
-
-sala: 534
 
 ## Aulas
 Segundas e quartas de 09 às 11h.
