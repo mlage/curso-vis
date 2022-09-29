@@ -21,22 +21,25 @@ class D3jsBins {
   }
 
   async loadCSV(file) {
-    this.data = await d3.csv(file, d => {
-      return {
-        val: +d.Profit,
-      }
-    });
+    this.data = await d3.csv(
+      file,
+      d => {
+        return {
+          val: +d.Profit,
+        }
+      });
 
     this.x = d3.extent(this.data, d => {
       return d.val;
     });
   }
 
+
   computeBins() {
     let n = 10;
     let s = (this.x[1] - this.x[0]) / (n - 1);
 
-    for (let id=0; id < 10; id++) {
+    for (let id=0; id < n; id++) {
       this.bins.push(0);
     }
 
@@ -55,9 +58,9 @@ class D3jsBins {
       .join('rect')
       .attr('x', (d, i) => i * this.w / 10 + 10)
       .attr('y', d => this.h * ( 1 - (d - this.y[0]) / (this.y[1] - this.y[0]) ))
-      .attr('width' , () => this.w / 10 - 20)
+      .attr('width' , () => this.w / 10 - 10)
       .attr('height' , d => this.h - this.h * ( 1 - (d - this.y[0]) / (this.y[1] - this.y[0]) ))
-      .style('fill', 'RoyalBlue')
+      .style('fill', 'RoyalBlue');
     }
 }
 

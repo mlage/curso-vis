@@ -17,8 +17,8 @@ class Canais {
   createSvg() {
     this.svg = d3.select(this.config.div)
       .append("svg")
-      .attr('x', 10)
-      .attr('y', 10)
+      .attr('x', 0)
+      .attr('y', 0)
       .attr('width', this.config.width + this.config.left + this.config.right)
       .attr('height', this.config.height + this.config.top + this.config.bottom);
   }
@@ -40,7 +40,7 @@ class Canais {
       }
     });
 
-    this.circles = this.circles.slice(0, 1000);
+    this.circles = this.circles.slice(0, 4000);
   }
 
   createScales() {
@@ -58,9 +58,11 @@ class Canais {
       return d.cat;
     });
     let catExtent = d3.union(cats);
+    console.log(cats);
+    console.log(catExtent);
 
-    this.xScale = d3.scaleLinear().domain(xExtent).nice().range([0, this.config.width]);
-    this.yScale = d3.scaleLinear().domain(yExtent).nice().range([this.config.height, 0]);
+    this.xScale = d3.scaleLinear().domain(xExtent).range([0, this.config.width]);
+    this.yScale = d3.scaleLinear().domain(yExtent).range([this.config.height, 0]);
 
     this.colScale = d3.scaleSequential(d3.interpolateOrRd).domain(colExtent);
     this.catScale = d3.scaleOrdinal().domain(catExtent).range(d3.schemeTableau10);
@@ -73,8 +75,8 @@ class Canais {
       .attr('cx', d => this.xScale(d.cx))
       .attr('cy', d => this.yScale(d.cy))
       .attr('r' , d => d.r)
-      .attr('fill', d => this.colScale(d.col));
-      // .attr('fill', d => this.catScale(d.cat));
+      //.attr('fill', d => this.colScale(d.col));
+      .attr('fill', d => this.catScale(d.cat));
   }
 }
 

@@ -24,7 +24,7 @@ class D3jsCsv {
       return {
         cx: +d.Sales,
         cy: +d.Profit,
-        r: 2
+        r: 5
       }
     });
 

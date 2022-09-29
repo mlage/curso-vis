@@ -25,7 +25,7 @@ class D3jsJson {
       return {
         cx: +d.Sales,
         cy: +d.Profit,
-        r: 2
+        r: 5
       }
     });
 
