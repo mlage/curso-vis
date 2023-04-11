@@ -17,8 +17,8 @@ class Eixos {
   createSvg() {
     this.svg = d3.select(this.config.div)
       .append("svg")
-      .attr('x', 10)
-      .attr('y', 10)
+      .attr('x', 0)
+      .attr('y', 0)
       .attr('width', this.config.width + this.config.left + this.config.right)
       .attr('height', this.config.height + this.config.top + this.config.bottom);
   }
@@ -40,7 +40,7 @@ class Eixos {
       }
     });
 
-    this.circles = this.circles.slice(0, 1000);
+    // this.circles = this.circles.slice(0, 1000);
   }
 
   createScales() {
@@ -97,7 +97,7 @@ class Eixos {
 
 
 async function main() {
-  let c = {div: '#main', width: 800, height: 600, top: 30, left: 50, bottom: 30, right: 30};
+  let c = {div: '#main', width: 800, height: 600, top: 30, left: 60, bottom: 30, right: 30};
   
   let a = new Eixos(c);
   await a.loadCSV('../00 - datasets/superstore.csv');
