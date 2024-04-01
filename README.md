@@ -1,4 +1,4 @@
-## Curso de Visualização de Dados (Sistemas de Infirmação & PGC, IC-UFF, 2024.1)
+## Curso de Visualização de Dados (SI & PGC, IC-UFF, 2024.1)
 
 Códigos utilizados no curso de visualização de dados oferecido pelo prof. Marcos Lage para o Curso de Sistemas de Informação e para o Programa de Pós-Graduação em Computação do Instituto de Computação da UFF.
 
