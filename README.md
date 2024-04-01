@@ -9,6 +9,7 @@ e-mail: mlage@ic.uff.br
 
 ## Aulas
 Quartas e Sextas de 16 às 18h (Pós Graduação).
+
 Quartas e Sextas de 18 às 20h (Sistemas de Informação).
 
 
