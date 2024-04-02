@@ -59,7 +59,7 @@ p { max-width: none; }
         Utilizando <a href="https://www.markdownguide.org/">Markdown</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</a> e <a href="https://developer.mozilla.org/en-US/docs/Web/HTML">JavaScript</a>!
     </div>
     <div class="card" >
-        <h2>Parte 02 - <a href="data/01-dados">Carregamento de Dados</a></h2>
+        <h2>Parte 02 - <a href="data/02-dados">Carregamento de Dados</a></h2>
         Carregando arquivos CSV, JSON, etc.
     </div>
 </div>
