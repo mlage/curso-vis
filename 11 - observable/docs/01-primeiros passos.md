@@ -8,7 +8,7 @@
 As páginas de uma aplicação desenvolvida usando o Observable Framework são escritas usando [Markdown](https://www.markdownguide.org/) e [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML).  
 
 
-### Markdown
+## Markdown
 A linguagem Markdown permite a construção de documentos formatados de forma simples e intuitiva.  
 Com Markdown podemos criar títulos, textos em **negrito** e *itálico*, [links](www.ic.uff.br), listas, tabelas entre outros. 
 
@@ -37,7 +37,7 @@ Tabelas:
 Existem diversas outros comandos disponíveis, não cobertos neste exemplo.  
 É recomendado que os alunos consultem o site [markdownguide.org](https://www.markdownguide.org/) para ter uma visão geral dos comandos disponíveis.
 
-### HTML
+## HTML
 Além da sintaxe básica ilustrada acima, documentos escritos usando Markdown podem ter estruturas HTML embutidas. 
 
 Exemplo:  
@@ -95,7 +95,7 @@ Podemos alterar o exemplo anterior para que se tenha 3 cards por linha:
 Todo o conteúdo visto nas aulas sobre HTML podem ser utilizados para compor a estrutura das páginas de uma aplicação construída com o Observable.
 
 
-### JavaScript
+## JavaScript
 Por fim, o Observable Framework permite que códigos javascript sejam adicionados a página.  
 
 1. Para adicionar um código, basta coloca-lo entre a marcação inicial \`\`\``js` e a marcação final \`\`\`.  

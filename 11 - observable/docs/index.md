@@ -55,11 +55,15 @@ p { max-width: none; }
 
 <div class="grid grid-cols-4">
     <div class="card" >
-        <h2>Parte 01 - <a href="data/01-primeiros passos">Primeiros passos</a></h2>
-        Utilizando <a href="https://www.markdownguide.org/">Markdown</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</a> e <a href="https://developer.mozilla.org/en-US/docs/Web/HTML">JavaScript</a>!
+        <h2>Parte 01<br><a href="01-primeiros passos">Primeiros passos</a></h2>
+        Use <a href="https://www.markdownguide.org/">Markdown</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</a> e <a href="https://developer.mozilla.org/en-US/docs/Web/HTML">JavaScript</a>!
     </div>
     <div class="card" >
-        <h2>Parte 02 - <a href="data/02-dados">Carregamento de Dados</a></h2>
+        <h2>Parte 02<br><a href="02-dados">Carregamento de Dados</a></h2>
         Carregando arquivos CSV, JSON, etc.
+    </div>
+    <div class="card" >
+        <h2>Parte 03<br><a href="03-gui">Elementos de Interface</a></h2>
+        Criação de botões, checkboxes, etc.
     </div>
 </div>
