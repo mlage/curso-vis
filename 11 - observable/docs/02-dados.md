@@ -35,7 +35,7 @@ Usando o Observable Framework é possivel carregar dados de APIs, arquivos, coma
 ## Carregamento de dados usando scripts Python
 
 ```js
-    const stores = await FileAttachment("./components/02-dados.csv").json({typed: true});
+    const stores = await FileAttachment("./data/02-dados.csv").json({typed: true});
 
     display(stores);
 ```
