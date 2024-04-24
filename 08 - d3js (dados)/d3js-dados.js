@@ -2,8 +2,7 @@ class D3jsDados {
   constructor() {
     this.circles = [];
     this.squares = [];
-
-    this.createSvg();
+    this.svg = this.createSvg();
   }
 
   createSvg() {
@@ -17,16 +16,16 @@ class D3jsDados {
     return node;
   }
 
-  createCircles(svg) {
-    const t = svg.transition()
+  createCircles() {
+    const t = this.svg.transition()
         .duration(1500);
 
-    let circles = svg.selectAll('circle')
+    let circles = this.svg.selectAll('circle')
       .data(this.circles);
 
     circles.enter()
       .append('circle')
-        .attr('cx', d => d.cx_)
+        .attr('cx', function(d){ return d.cx_; })
         .attr('cy', d => d.cy_)
         .attr('r' , d => d.r_)
         .style('fill', 'RoyalBlue');
@@ -36,7 +35,7 @@ class D3jsDados {
       .call(
         ex => ex.transition(t)
         .remove()
-      )
+      );
 
     circles
       .attr('cx', d => d.cx_)
@@ -45,11 +44,11 @@ class D3jsDados {
       .style('fill', 'SeaGreen');
   }
 
-  createSquares(svg) {
-    const t = svg.transition()
+  createSquares() {
+    const t = this.svg.transition()
         .duration(1500);
 
-    svg.selectAll('rect')
+    this.svg.selectAll('rect')
       .data(this.squares)
       .join(
         // enter
@@ -75,10 +74,8 @@ class D3jsDados {
     this.circles = circles;
     this.squares = squares;
 
-    let svg = d3.select("svg")
-    
-    this.createCircles(svg);
-    this.createSquares(svg);
+    this.createCircles();
+    this.createSquares();
   }
 }
 
@@ -88,7 +85,7 @@ window.onload = () => {
   setInterval(() => { 
     let nc = Math.floor(Math.random() * 50);
     let ns = Math.floor(Math.random() * 50);
-    
+
     const circles = []
     for (let c=0; c<nc; c++) {
       const circle = {

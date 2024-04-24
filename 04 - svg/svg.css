@@ -1,3 +1,7 @@
+body {
+    padding: 10px;
+}
+
 circle{
     stroke: gray;
     stroke-width: 2px;
@@ -5,7 +9,7 @@ circle{
   }
   
 rect{
-    stroke: black; 
-    stroke-width: 2px;
-    fill: red; 
+    stroke: blue; 
+    stroke-width: 20px;
+    fill: rgb(255, 59, 10); 
   }

@@ -3,10 +3,14 @@
 // Acesso usando a tag do elemento
 //--------------------------------------------------
 let x = document.getElementsByTagName("div");
+console.log(x);
 
 for (let id = 0; id < x.length; id++) {
   x[id].innerHTML = `Novo Conteúdo do div ${id}!!`;
-  x[id].style.padding = "10px";
+  
+  x[id].style.padding = "15px";
+  x[id].style.border = "2px solid";
+  x[id].style.margin = "5px";
 }
 //--------------------------------------------------
 
@@ -29,7 +33,7 @@ d.style.color = "#aaa";
 let c = document.getElementsByClassName("borda");
 
 for (let id = 0; id < c.length; id++) {
-  c[id].style.borderLeft = '3px solid blue';
+  c[id].style.borderLeft = '15px solid #27ba4e';
 }
 //--------------------------------------------------
 
