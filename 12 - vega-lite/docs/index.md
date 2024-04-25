@@ -9,7 +9,7 @@ const vl = vegaLiteApi.register(vega, vegaLite);
 
 const stores = await FileAttachment("./data/superstore.csv").csv({typed: true});
 
-function scatter(data) {
+function ex01(data) {
     return {
         spec: {
             width: "container",
@@ -34,9 +34,9 @@ function scatter(data) {
 
 <div class="grid grid-cols-2">
     <div class="card">
-        <h1>Scatter plot</h1>
+        <h1>Ex 01</h1>
         <div style="width: 100%; margin-top: 15px;">
-            ${ vl.render(scatter(stores)) }
+            ${ vl.render(ex01(stores)) }
         </div>
     </div>
     <div class="card">
