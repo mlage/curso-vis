@@ -6,25 +6,25 @@
     <div id="ex01" class="card">
         <h1>Exemplo 01</h1>
         <div style="width: 100%; margin-top: 15px;">
-            ${ vl.render(ex01(div01Width - 10)) }
+            ${ vl.render(ex01(divWidth - 10)) }
         </div>
     </div>
     <div id="ex02" class="card">
         <h1>Exemplo 02</h1>
         <div style="width: 100%; margin-top: 15px;">
-            ${ vl.render(ex02(div02Width - 70)) }
+            ${ vl.render(ex02(divWidth - 70)) }
         </div>
     </div>
     <div id="ex03" class="card">
         <h1>Exemplo 03</h1>
         <div style="width: 100%; margin-top: 15px;">
-            ${ vl.render(ex03(div03Width - 70)) }
+            ${ vl.render(ex03(divWidth - 70)) }
         </div>
     </div>
     <div id="ex04" class="card">
         <h1>Exemplo 04</h1>
         <div style="width: 100%; margin-top: 15px;">
-            ${ vl.render(ex04(div04Width - 70)) }
+            ${ vl.render(ex04(divWidth - 70)) }
         </div>
     </div>
 </div>
@@ -33,18 +33,14 @@
     <div  id="ex05" class="card">
         <h1>Exemplo 05</h1>
         <div style="width: 100%; margin-top: 15px;">
-            ${ vl.render(ex05(div05Width - 40)) }
+            ${ vl.render(ex05(divWidth - 40)) }
         </div>
     </div>
 </div>
 
 
 ```js
-const div01Width = Generators.width(document.querySelector("#ex01"));
-const div02Width = Generators.width(document.querySelector("#ex02"));
-const div03Width = Generators.width(document.querySelector("#ex03"));
-const div04Width = Generators.width(document.querySelector("#ex04"));
-const div05Width = Generators.width(document.querySelector("#ex05"));
+const divWidth = Generators.width(document.querySelector("#ex01"));
 
 ```
 
