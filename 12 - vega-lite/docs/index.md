@@ -1,4 +1,6 @@
-# Vega-lite
+# Introdução ao Vega-lite
+
+## Exemplos iniciais
 
 ```js
 import * as vega from "npm:vega";
@@ -7,46 +9,154 @@ import * as vegaLiteApi from "npm:vega-lite-api";
 
 const vl = vegaLiteApi.register(vega, vegaLite);
 
-const stores = await FileAttachment("./data/superstore.csv").csv({typed: true});
+const toy = await FileAttachment("./data/toy.json").json({typed: true});
 
-function ex01(data) {
+function ex01() {
     return {
         spec: {
             width: "container",
             data: {
-                values: data
+                values: toy
             },
-            mark: "point",
-            encoding: {
-                x: {
-                    type: "quantitative",
-                    field: "Profit"
-                },
-                y: {
-                    type: "quantitative",
-                    field: "Sales"
+            mark: {
+                "type": "point",
+                "size": 100
+            }
+        }
+    };
+}
+
+function ex02() {
+    return {
+        spec: {
+            width: "container",
+            data: {
+                values: toy
+            },
+            mark: {
+                "type": "point",
+                "size": 100
+            },
+            "encoding": {
+                "y": {
+                    "field": "city",
+                    "type": "nominal"
                 }
             }
         }
     };
 }
+
+function ex03() {
+    return {
+        spec: {
+            width: "container",
+            data: {
+                values: toy
+            },
+            mark: {
+                "type": "point",
+                "size": 100
+            },
+            "encoding": {
+                "x": {
+                    "field": "precip",
+                    "type": "quantitative"
+                },
+                "y": {
+                    "field": "city",
+                    "type": "nominal"
+                }
+            }
+        }
+    };
+}
+
+function ex04() {
+    return {
+        spec: {
+            width: "container",
+            data: {
+                values: toy
+            },
+            "mark": {
+                "type": "bar"
+            },
+            "encoding": {
+                "x": {
+                    "field": "precip",
+                    "type": "quantitative",
+                    "aggregate": "average"
+                },
+                "y": {
+                    "field": "city",
+                    "type": "nominal"
+                }
+            }
+        }
+    };
+}
+
+
+function ex05() {
+    return {
+        spec: {
+            width: "container",
+            data: {
+                values: toy
+            },
+            "mark": {
+                "type": "bar"
+            },
+            "encoding": {
+                "y": {
+                    "field": "precip",
+                    "type": "quantitative",
+                    "aggregate": "average"
+                },
+                "x": {
+                    "field": "city",
+                    "type": "nominal"
+                }
+            }
+        }
+    };
+}
+
 ```
 
 <div class="grid grid-cols-2">
     <div class="card">
-        <h1>Ex 01</h1>
+        <h1>Exemplo 01</h1>
         <div style="width: 100%; margin-top: 15px;">
-            ${ vl.render(ex01(stores)) }
+            ${ vl.render(ex01()) }
         </div>
     </div>
     <div class="card">
-        <h1>Scatter plot</h1>
+        <h1>Exemplo 02</h1>
         <div style="width: 100%; margin-top: 15px;">
+            ${ vl.render(ex02()) }
         </div>
     </div>
-    <div class="card grid-colspan-2">
-        <h1>Scatter plot</h1>
+    <div class="card">
+        <h1>Exemplo 03</h1>
         <div style="width: 100%; margin-top: 15px;">
+            ${ vl.render(ex03()) }
+        </div>
+    </div>
+    <div class="card">
+        <h1>Exemplo 04</h1>
+        <div style="width: 100%; margin-top: 15px;">
+            ${ vl.render(ex04()) }
+        </div>
+    </div>
+</div>
+
+<div class="grid grid-cols-2">
+    <div class="card">
+        <h1>Exemplo 05</h1>
+        <div style="width: 100%; margin-top: 15px;">
+            ${ vl.render(ex05()) }
         </div>
     </div>
 </div>
