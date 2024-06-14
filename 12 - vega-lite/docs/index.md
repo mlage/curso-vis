@@ -41,7 +41,6 @@
 
 ```js
 const divWidth = Generators.width(document.querySelector("#ex01"));
-
 ```
 
 
@@ -49,20 +48,19 @@ const divWidth = Generators.width(document.querySelector("#ex01"));
 import * as vega from "npm:vega";
 import * as vegaLite from "npm:vega-lite";
 import * as vegaLiteApi from "npm:vega-lite-api";
-
 const vl = vegaLiteApi.register(vega, vegaLite);
 
 const toy = await FileAttachment("./data/toy.json").json({typed: true});
 
 function ex01(divWidth) {
     return {
-        spec: {
-            width: divWidth,
-            data: {
-                values: toy
+        "spec": {
+            "width": divWidth,
+            "data": {
+                "values": toy
             },
-            mark: {
-                "type": "point",
+            "mark": {
+                "type": "circle",
                 "size": 100
             }
         }
@@ -71,13 +69,13 @@ function ex01(divWidth) {
 
 function ex02(divWidth) {
     return {
-        spec: {
-            width: divWidth,
-            data: {
-                values: toy
+        "spec": {
+            "width": divWidth,
+            "data": {
+                "values": toy
             },
-            mark: {
-                "type": "point",
+            "mark": {
+                "type": "circle",
                 "size": 100
             },
             "encoding": {
@@ -92,13 +90,13 @@ function ex02(divWidth) {
 
 function ex03(divWidth) {
     return {
-        spec: {
-            width: divWidth,
-            data: {
-                values: toy
+        "spec": {
+            "width": divWidth,
+            "data": {
+                "values": toy
             },
-            mark: {
-                "type": "point",
+            "mark": {
+                "type": "circle",
                 "size": 100
             },
             "encoding": {
@@ -117,10 +115,10 @@ function ex03(divWidth) {
 
 function ex04(divWidth) {
     return {
-        spec: {
-            width: divWidth,
-            data: {
-                values: toy
+        "spec": {
+            "width": divWidth,
+            "data": {
+                "values": toy
             },
             "mark": {
                 "type": "bar"
@@ -143,10 +141,10 @@ function ex04(divWidth) {
 
 function ex05(divWidth) {
     return {
-        spec: {
-            width: divWidth,
-            data: {
-                values: toy
+        "spec": {
+            "width": divWidth,
+            "data": {
+                "values": toy
             },
             "mark": {
                 "type": "bar"

@@ -14,6 +14,7 @@ Análise do conjunto de dados da [Gapminder](https://www.gapminder.org/), simula
 
 ```js
 const gap = await FileAttachment("./data/gap.json").json({typed: true});
+
 const yrs = gap.map(d => d['year']);
 
 const min = Math.min(...yrs);
@@ -24,7 +25,6 @@ view(Inputs.table(gap));
 
 ## Interações
 ```js
-
 const year = view(Inputs.range([min, max], {value: min, step: 5, label: "Years"}))
 ```
 
@@ -50,7 +50,6 @@ const year = view(Inputs.range([min, max], {value: min, step: 5, label: "Years"}
 -->
 ```js
 const divWidth = Generators.width(document.querySelector("#ex01"));
-
 ```
 
 ```js
@@ -61,16 +60,15 @@ const gapSubset = gap.filter(d => d['year'] === year);
 import * as vega from "npm:vega";
 import * as vegaLite from "npm:vega-lite";
 import * as vegaLiteApi from "npm:vega-lite-api";
-
 const vl = vegaLiteApi.register(vega, vegaLite);
 
 function ex01(divWidth) {
     return {
-        spec: {
-            width: divWidth,
-            height: 400,
-            data: {
-                values: gapSubset
+        "spec": {
+            "width": divWidth,
+            "height": 400,
+            "data": {
+                "values": gapSubset
             },
             "mark": {
                 "type": "point",
@@ -119,11 +117,11 @@ function ex01(divWidth) {
 
 function ex02(divWidth) {
     return {
-        spec: {
-            width: divWidth,
-            height: 400,
-            data: {
-                values: gapSubset
+        "spec": {
+            "width": divWidth,
+            "height": 400,
+            "data": {
+                "values": gapSubset
             },
             "mark": {
                 "type": "bar",
