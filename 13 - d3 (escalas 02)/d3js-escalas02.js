@@ -1,4 +1,4 @@
-class Canais {
+class Escalas01 {
   constructor(config) {
     this.config = config;
 
@@ -82,7 +82,7 @@ class Canais {
 async function main() {
   let c = {div: '#main', width: 800, height: 600, top: 30, left: 30, bottom: 30, right: 30};
   
-  let a = new Canais(c);
+  let a = new Escalas01(c);
   await a.loadCSV('../00 - datasets/superstore.csv');
   
   a.createScales();
