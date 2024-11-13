@@ -1,0 +1,31 @@
+{
+    "data": {
+        "url": "04 - data.json"
+    },
+    "mark": {
+      "type": "bar"
+    },
+    "encoding": {
+      "x": {
+        "field": "Rotten_Tomatoes_Rating",
+        "type": "quantitative",
+        "aggregate": "q1"
+      },
+      "x2": {
+        "field": "Rotten_Tomatoes_Rating",
+        "type": "quantitative",
+        "aggregate": "q3"
+      },
+      "y": {
+        "field": "Major_Genre",
+        "type": "nominal",
+        "sort": {
+          "op": "median",
+          "field": "Rotten_Tomatoes_Rating",
+          "order": "descending"
+        }
+      }
+    },
+    "width": 300,
+    "height": 150
+  }

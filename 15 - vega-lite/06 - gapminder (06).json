@@ -1,0 +1,50 @@
+{
+    "data": {
+        "url": "06 - data.json"
+    },
+    "mark": {
+        "type": "point",
+        "filled": true,
+        "opacity": 0.5
+    },
+    "encoding": {
+        "x": {
+            "field": "fertility",
+            "type": "quantitative"
+        },
+        "y": {
+            "field": "life_expect",
+            "type": "quantitative"
+        },
+        "size": {
+            "field": "pop",
+            "type": "quantitative",
+            "scale": {
+                "range": [
+                    0,
+                    1000
+                ]
+            }
+        },
+        "color": {
+            "field": "cluster",
+            "type": "nominal"
+        },
+        "tooltip": [
+            {
+                "field": "country",
+                "type": "nominal"
+            },
+            {
+                "field": "fertility",
+                "type": "nominal"
+            },
+            {
+                "field": "life_expect",
+                "type": "nominal"
+            }
+        ]
+    },
+    "width": 400,
+    "height": 250
+}

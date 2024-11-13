@@ -1,0 +1,30 @@
+{
+    "data": {
+        "url": "04 - data.json"
+    },
+    "mark": {
+        "type": "circle"
+    },
+    "encoding": {
+        "x": {
+            "field": "IMDB_Rating",
+            "type": "quantitative",
+            "bin": {
+                "maxbins": 20
+            }
+        },
+        "y": {
+            "field": "Rotten_Tomatoes_Rating",
+            "type": "quantitative",
+            "bin": {
+                "maxbins": 10
+            }
+        },
+        "size": {
+            "type": "quantitative",
+            "aggregate": "count"
+        }
+    },
+    "width": 300,
+    "height": 150
+}

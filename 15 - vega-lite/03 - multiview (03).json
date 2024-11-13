@@ -1,0 +1,83 @@
+{
+    "data": {
+        "url": "03 - data.json"
+    },
+    "hconcat": [
+        {
+            "layer": [
+                {
+                    "mark": {
+                        "type": "line"
+                    },
+                    "encoding": {
+                        "x": {
+                            "field": "Year",
+                            "type": "temporal"
+                        },
+                        "y": {
+                            "field": "Miles_per_Gallon",
+                            "type": "quantitative",
+                            "aggregate": "average"
+                        }
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "circle"
+                    },
+                    "encoding": {
+                        "x": {
+                            "field": "Year",
+                            "type": "temporal"
+                        },
+                        "y": {
+                            "field": "Miles_per_Gallon",
+                            "type": "quantitative",
+                            "aggregate": "average"
+                        }
+                    }
+                }
+            ],
+            "width": 300,
+            "height": 150
+        },
+        {
+            "layer": [
+                {
+                    "mark": {
+                        "type": "line"
+                    },
+                    "encoding": {
+                        "x": {
+                            "field": "Year",
+                            "type": "temporal"
+                        },
+                        "y": {
+                            "field": "Horsepower",
+                            "type": "quantitative",
+                            "aggregate": "average"
+                        }
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "circle"
+                    },
+                    "encoding": {
+                        "x": {
+                            "field": "Year",
+                            "type": "temporal"
+                        },
+                        "y": {
+                            "field": "Horsepower",
+                            "type": "quantitative",
+                            "aggregate": "average"
+                        }
+                    }
+                }
+            ],
+            "width": 300,
+            "height": 150
+        }
+    ]
+}
