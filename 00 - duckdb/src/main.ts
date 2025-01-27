@@ -1,45 +1,50 @@
 import { AsyncDuckDB, AsyncDuckDBConnection } from '@duckdb/duckdb-wasm';
 
-import { Table } from './types';
 import { loadDb } from './config';
 
 export class Taxi {
     private db?: AsyncDuckDB;
     private conn?: AsyncDuckDBConnection;
 
-    private tables?: any;
+    private table = 'TAXI_2023';
 
     async init() {
         this.db = await loadDb();
         this.conn = await this.db.connect();
     }
 
-    async loadTaxi(): Promise<any> {
+    async loadTaxi(months: number = 3) {
         if (!this.db || !this.conn)
             throw new Error('Database not initialized. Please call init() first.');
 
-        const table = 'TAXI_2023';
+        const files = [];
 
-        for (let id = 1; id <= 1; id++) {
+        for (let id = 1; id <= months; id++) {
             const sId = String(id).padStart(2, '0')
-            const file = `../data/yellow_tripdata_2023-${sId}.parquet`;
+            files.push({ key: `Y2023M${sId}`, url: `../data/yellow_tripdata_2023-${sId}.parquet` });
 
-            const res = await fetch(file);
-            await this.db.registerFileBuffer(`taxi_2023_${sId}.parquet`, new Uint8Array(await res.arrayBuffer()));
-
-            const result = await this.conn.query(`
-                CREATE TABLE test AS
-                    SELECT * FROM taxi_2023_${sId}.parquet;
-            `);
-
-            const res2 = await this.conn.query(`
-                SELECT * FROM test;
-            `);
-
-            console.log(res2);
+            const res = await fetch(files[files.length - 1].url);
+            await this.db.registerFileBuffer(files[files.length - 1].key, new Uint8Array(await res.arrayBuffer()));
         }
 
-        return;
+        await this.conn.query(`
+            CREATE TABLE ${this.table} AS
+                SELECT * 
+                FROM read_parquet([${files.map(d => d.key).join(",")}]);
+        `);
+    }
+
+    async test(limit: number = 100) {
+        if (!this.db || !this.conn)
+            throw new Error('Database not initialized. Please call init() first.');
+
+        const res = await this.conn.query(`
+            SELECT * 
+            FROM ${this.table}
+            LIMIT ${limit};
+        `);
+
+        console.log(res);
     }
 }
 
@@ -47,7 +52,8 @@ async function main() {
     const taxi = new Taxi();
 
     await taxi.init();
-    await taxi.loadTaxi();
+    await taxi.loadTaxi(1);
+    await taxi.test(1);
 }
 
 main();
