@@ -19,7 +19,7 @@
                 "name": "brush",
                 "select": {
                     "type": "interval",
-                    "resolve": "union",
+                    "resolve": "intersect",
                     "on": "[pointerdown[event.shiftKey], window:pointerup] > window:pointermove!"
                 }
             },
