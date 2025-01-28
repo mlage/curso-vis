@@ -21,13 +21,17 @@ class D3jsJson {
 
   async loadJSON(file) {
     this.circles = await d3.json(file);
-    this.circles = this.circles.map(d => {
+    console.log(this.circles)
+
+    let mapped = this.circles.map(d => {
       return {
         cx: +d.Sales,
         cy: +d.Profit,
         r: 5
       }
     });
+
+    this.circles = mapped;
 
     this.x = d3.extent(this.circles, d => {
       return d.cx;

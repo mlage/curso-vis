@@ -7,7 +7,7 @@ console.log(x);
 
 for (let id = 0; id < x.length; id++) {
   x[id].innerHTML = `Novo Conteúdo do div ${id}!!`;
-  
+
   x[id].style.padding = "15px";
   x[id].style.border = "2px solid";
   x[id].style.margin = "5px";
@@ -47,5 +47,4 @@ s.innerHTML = "<h1>Novo Texto...</h1>";
 
 let h = document.querySelectorAll("h1");
 h[0].textContent = "Tag de título";
-
 //--------------------------------------------------
