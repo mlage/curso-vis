@@ -1,0 +1,58 @@
+{
+    "data": {
+        "url": "04 - data.json"
+    },
+    "mark": {
+        "type": "bar"
+    },
+    "transform": [
+        {
+            "filter": "datum.Director != null"
+        },
+        {
+            "aggregate": [
+                {
+                    "op": "sum",
+                    "field": "Worldwide_Gross",
+                    "as": "Gross"
+                }
+            ],
+            "groupby": [
+                "Director"
+            ]
+        },
+        {
+            "window": [
+                {
+                    "op": "rank",
+                    "as": "Rank"
+                }
+            ],
+            "sort": [
+                {
+                    "field": "Gross",
+                    "order": "descending"
+                }
+            ]
+        },
+        {
+            "filter": "datum.Rank < 20"
+        }
+    ],
+    "encoding": {
+        "x": {
+            "field": "Gross",
+            "type": "quantitative"
+        },
+        "y": {
+            "field": "Director",
+            "type": "nominal",
+            "sort": {
+                "field": "Gross",
+                "order": "descending"
+            }
+        }
+    },
+    "width": 400,
+    "height": 400
+}

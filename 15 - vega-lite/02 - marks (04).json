@@ -1,0 +1,21 @@
+{
+    "data": {
+        "url": "02 - data.json"
+    },
+    "mark": {
+        "type": "bar"
+    },
+    "encoding": {
+        "x": {
+            "field": "precip",
+            "type": "quantitative",
+            "aggregate": "average"
+        },
+        "y": {
+            "field": "city",
+            "type": "nominal"
+        }
+    },
+    "width": 400,
+    "height": 150
+}

@@ -1,0 +1,16 @@
+{
+    "data": {
+        "url": "06 - data.json"
+    },
+    "mark": {
+        "type": "point"
+    },
+    "encoding": {
+        "x": {
+            "field": "fertility",
+            "type": "quantitative"
+        }
+    },
+    "width": 400,
+    "height": 150
+}

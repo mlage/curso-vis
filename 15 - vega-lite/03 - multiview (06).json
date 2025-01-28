@@ -1,0 +1,24 @@
+{
+    "data": {
+      "url": "03 - data.json"
+    },
+    "repeat":  ["Cylinders", "Miles_per_Gallon", "Horsepower"],
+    "spec": {
+      "mark": "line",
+      "encoding": {
+        "y": {
+          "field": {"repeat": "repeat"},
+          "type": "quantitative",
+          "aggregate": "average"
+        },
+        "x": {
+          "field": "Year",
+          "type": "temporal"
+        },
+        "color": {
+            "field": "Origin",
+            "type": "Nominal"
+        }
+      }
+    }
+  }
