@@ -57,7 +57,7 @@ export class Taxi {
         return result.toArray().map(row => row.toJSON());
     }
 
-    async select(sql: string) {
+    async query(sql: string) {
         if (!this.db || !this.conn)
             throw new Error('Database not initialized. Please call init() first.');
         
