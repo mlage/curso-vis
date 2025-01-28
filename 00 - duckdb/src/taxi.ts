@@ -34,6 +34,14 @@ export class Taxi {
         `);
     }
 
+    async queryTaxi(sql: string) {
+        if (!this.db || !this.conn)
+            throw new Error('Database not initialized. Please call init() first.');
+        
+        let result =  await this.conn.query(sql);
+        return result.toArray().map(row => row.toJSON());
+    }
+
     async test(limit: number | undefined = undefined) {
         if (!this.db || !this.conn)
             throw new Error('Database not initialized. Please call init() first.');
@@ -54,14 +62,6 @@ export class Taxi {
         }
 
         console.log("Query finished.")
-        return result.toArray().map(row => row.toJSON());
-    }
-
-    async query(sql: string) {
-        if (!this.db || !this.conn)
-            throw new Error('Database not initialized. Please call init() first.');
-        
-        let result =  await this.conn.query(sql);
         return result.toArray().map(row => row.toJSON());
     }
 }
