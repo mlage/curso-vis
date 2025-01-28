@@ -1,0 +1,46 @@
+#app {
+    width: 100%;
+    padding: 10px;
+
+    margin: auto;
+
+    text-align: center;
+    text-shadow: 1px 1px 2px lightgray;
+
+    color: darkslategray;
+}
+
+#app h2 {
+    font-size: large;
+    font-style: italic;
+}
+
+table {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #dededf;
+
+    margin: auto;
+
+    border-collapse: collapse;
+    border-spacing: 1px;
+    text-align: center;
+
+    font-size: small;
+
+    table-layout: auto;
+}
+
+th {
+    border: 1px solid #dededf;
+    background-color: #eceff1;
+    color: #000000;
+    padding: 5px;
+}
+
+td {
+    border: 1px solid #dededf;
+    background-color: #ffffff;
+    color: #000000;
+    padding: 5px;
+}

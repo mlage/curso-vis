@@ -1,59 +1,38 @@
-import { AsyncDuckDB, AsyncDuckDBConnection } from '@duckdb/duckdb-wasm';
+import { Taxi } from "./taxi";
 
-import { loadDb } from './config';
+function createTableWithInnerHTML(data: any[]) {
+    let tableHTML = '<table border="1"><tr>';
 
-export class Taxi {
-    private db?: AsyncDuckDB;
-    private conn?: AsyncDuckDBConnection;
+    Object.keys(data[0]).forEach(key => {
+        tableHTML += `<th>${key}</th>`;
+    });
 
-    private table = 'TAXI_2023';
+    tableHTML += '</tr>';
 
-    async init() {
-        this.db = await loadDb();
-        this.conn = await this.db.connect();
-    }
+    data.forEach( (item: any) => {
+        tableHTML += '<tr>';
+        Object.values(item).forEach(value => {
+            tableHTML += `<td>${value}</td>`;
+        });
+        tableHTML += '</tr>';
+    });
+    tableHTML += '</table>';
 
-    async loadTaxi(months: number = 3) {
-        if (!this.db || !this.conn)
-            throw new Error('Database not initialized. Please call init() first.');
-
-        const files = [];
-
-        for (let id = 1; id <= months; id++) {
-            const sId = String(id).padStart(2, '0')
-            files.push({ key: `Y2023M${sId}`, url: `../data/yellow_tripdata_2023-${sId}.parquet` });
-
-            const res = await fetch(files[files.length - 1].url);
-            await this.db.registerFileBuffer(files[files.length - 1].key, new Uint8Array(await res.arrayBuffer()));
-        }
-
-        await this.conn.query(`
-            CREATE TABLE ${this.table} AS
-                SELECT * 
-                FROM read_parquet([${files.map(d => d.key).join(",")}]);
-        `);
-    }
-
-    async test(limit: number = 100) {
-        if (!this.db || !this.conn)
-            throw new Error('Database not initialized. Please call init() first.');
-
-        const res = await this.conn.query(`
-            SELECT * 
-            FROM ${this.table}
-            LIMIT ${limit};
-        `);
-
-        console.log(res);
+    const div = document.querySelector("#table");
+    if(div) {
+        div.innerHTML += tableHTML;
     }
 }
 
-async function main() {
+window.onload = async () => {
+    const months = 1;
+    const limit = 100;
+
     const taxi = new Taxi();
 
     await taxi.init();
-    await taxi.loadTaxi(1);
-    await taxi.test(1);
-}
+    await taxi.loadTaxi(months);
+    const data = await taxi.test(limit);
 
-main();
+    createTableWithInnerHTML(data);
+};
