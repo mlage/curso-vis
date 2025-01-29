@@ -6,7 +6,8 @@ export class Taxi {
     private db?: AsyncDuckDB;
     private conn?: AsyncDuckDBConnection;
 
-    private table = 'TAXI_2023';
+    private color = "green";
+    private table = 'taxi_2023';
 
     async init() {
         this.db = await loadDb();
@@ -21,7 +22,7 @@ export class Taxi {
 
         for (let id = 1; id <= months; id++) {
             const sId = String(id).padStart(2, '0')
-            files.push({ key: `Y2023M${sId}`, url: `../data/yellow_tripdata_2023-${sId}.parquet` });
+            files.push({ key: `Y2023M${sId}`, url: `../data/${this.color}/${this.color}_tripdata_2023-${sId}.parquet` });
 
             const res = await fetch(files[files.length - 1].url);
             await this.db.registerFileBuffer(files[files.length - 1].key, new Uint8Array(await res.arrayBuffer()));
