@@ -45,9 +45,11 @@ body > p {
 #d1 p {
     font-style: italic;
 }
+ 
 #p1 ~ p {
     text-transform: uppercase;
 }
+
 p[title] {
     text-align: right;
 }

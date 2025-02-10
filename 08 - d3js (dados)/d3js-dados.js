@@ -25,9 +25,9 @@ class D3jsDados {
 
     circles.enter()
       .append('circle')
-        .attr('cx', function(d){ return d.cx_; })
-        .attr('cy', d => d.cy_)
-        .attr('r' , d => d.r_)
+        .attr('cx', function(d){ return d.lucro; })
+        .attr('cy', d => d.gasto)
+        .attr('r' , d => d.ganho)
         .style('fill', 'RoyalBlue');
 
     circles.exit()
@@ -38,9 +38,9 @@ class D3jsDados {
       );
 
     circles
-      .attr('cx', d => d.cx_)
-      .attr('cy', d => d.cy_)
-      .attr('r' , d => d.r_)
+      .attr('cx', d => d.lucro)
+      .attr('cy', d => d.gasto)
+      .attr('r' , d => d.ganho)
       .style('fill', 'SeaGreen');
   }
 
@@ -89,9 +89,9 @@ window.onload = () => {
     const circles = []
     for (let c=0; c<nc; c++) {
       const circle = {
-        cx_: Math.random()*800,
-        cy_: Math.random()*600,
-        r_ : Math.random()*20 + 10
+        lucro: Math.random()*800,
+        gasto: Math.random()*600,
+        ganho: Math.random()*20 + 10
       }
       circles.push(circle);
     }

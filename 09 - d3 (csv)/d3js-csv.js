@@ -20,20 +20,24 @@ class D3jsCsv {
   }
 
   async loadCSV(file) {
-    this.circles = await d3.csv(file, d => {
-      return {
-        cx: +d.Sales,
-        cy: +d.Profit,
-        r: 5
-      }
-    });
+    this.circles = await d3.csv(file, linha => {
+        return {
+          cx: +linha.Sales,
+          cy: +linha.Profit,
+          r: 5
+        }
+      });
 
     this.x = d3.extent(this.circles, d => {
       return d.cx;
     });
+    console.log("cx", this.x)
+
     this.y = d3.extent(this.circles, d => {
       return d.cy;
-    });  
+    });
+    console.log("cy", this.y)
+
   }
 
   render() {

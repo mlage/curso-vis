@@ -1,7 +1,8 @@
 class D3jsBins {
   constructor() {
     this.data = [];
-    this.bins = []
+    this.bins = [];
+    this.n = 100;
 
     this.x = [Infinity, -Infinity],
     this.y = [Infinity, -Infinity],
@@ -21,31 +22,45 @@ class D3jsBins {
   }
 
   async loadCSV(file) {
-    this.data = await d3.csv(file, d => {
+    this.data = await d3.csv(file, linha => {
       return {
-        val: +d.Profit,
-      }
+            val: +linha.Profit
+        }
     });
 
     this.x = d3.extent(this.data, d => {
       return d.val;
     });
+
+    // let min = d3.quantile(this.bins, 0.25);
+    // let max = d3.quantile(this.bins, 0.75);
+
+    // this.y = [min, max];
+
+    console.log(this.x);
   }
 
   computeBins() {
-    let n = 10;
-    let s = (this.x[1] - this.x[0]) / (n - 1);
+    let s = (this.x[1] - this.x[0]) / this.n;
 
-    for (let id=0; id < 10; id++) {
+    for (let id=0; id < this.n; id++) {
       this.bins.push(0);
     }
 
-    this.data.forEach(d => {
-      let pos = Math.floor((d.val - this.x[0]) / s);
-      this.bins[pos] += 1;
-    });
+    for (let id = 0; id < this.data.length; id++) {
+        let d = this.data[id];
+
+        let pos = Math.floor((d.val - this.x[0]) / s);
+
+        if(pos === this.n) {
+            pos = this.n-1;
+        }
+
+        this.bins[pos] += 1;
+      }
 
     this.y = d3.extent(this.bins);
+    
     console.log(this.bins);
   }
 
@@ -53,9 +68,9 @@ class D3jsBins {
     this.svg.selectAll('rect')
       .data(this.bins)
       .join('rect')
-      .attr('x', (d, i) => i * this.w / 10 + 10)
+      .attr('x', (d, i) => i * this.w / this.n)
       .attr('y', d => this.h * ( 1 - (d - this.y[0]) / (this.y[1] - this.y[0]) ))
-      .attr('width' , () => this.w / 10 - 20)
+      .attr('width' , () => this.w / this.n)
       .attr('height' , d => this.h - this.h * ( 1 - (d - this.y[0]) / (this.y[1] - this.y[0]) ))
       .style('fill', 'RoyalBlue')
     }
@@ -63,7 +78,7 @@ class D3jsBins {
 
 async function main() {
   let app = new D3jsBins();
-  
+
   await app.loadCSV('../00 - datasets/superstore.csv');
   app.computeBins();
   app.render()

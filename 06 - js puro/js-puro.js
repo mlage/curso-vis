@@ -3,7 +3,6 @@ class JsPuro {
 
   createSvg() {
     let div = document.querySelector('#main');
-    // console.log(div);
 
     // Um nó svg é especial!
     let node = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -55,14 +54,9 @@ class JsPuro {
   }
 }
 
-// function main() {
-//     let app = new JsPuro();
-//     app.run();
-// }
-// window.onload = main;
 
 window.onload = () => {
-  let app = new JsPuro();
-  app.run();
+    let app = new JsPuro();
+    app.run();
 }
 
