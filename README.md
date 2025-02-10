@@ -9,8 +9,8 @@ e-mail: mlage@ic.uff.br
 
 ## Aulas
 ### 2025.1 
-PGC: Segundas e Quartas de 11 às 13h.
-SI:  Segundas e Quartas de 18 às 20h.
+* PGC - Segundas e Quartas de 11 às 13h.
+* SI - Segundas e Quartas de 18 às 20h.
 
 
 ## Instruções
