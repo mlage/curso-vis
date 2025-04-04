@@ -43,6 +43,18 @@ export class Taxi {
         return result.toArray().map(row => row.toJSON());
     }
 
+    async groupByMonth() {
+        if (!this.db || !this.conn)
+            throw new Error('Database not initialized. Please call init() first.');
+
+        const sql = `
+            SELECT    COUNT(*) 
+            FROM      ${this.table} 
+            GROUP BY  MONTH(lpep_pickup_datetime)
+        `
+        return (await this.queryTaxi(sql)).map(row => row["count_star()"].toString());
+    }
+
     async test(limit: number | undefined = undefined) {
         if (!this.db || !this.conn)
             throw new Error('Database not initialized. Please call init() first.');
