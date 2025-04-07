@@ -1,6 +1,6 @@
-## Curso de Visualização de Dados (SI, IC-UFF, 2024.2)
+## Curso de Visualização de Dados (IC-UFF)
 
-Códigos utilizados no curso de visualização de dados oferecido pelo prof. Marcos Lage para o Curso de Sistemas de Informação do Instituto de Computação da UFF.
+Códigos utilizados no curso de visualização de dados oferecido pelo prof. Marcos Lage para os cursos de Sistemas de Informação e do programa de pós-graduação em Computação do Instituto de Computação da UFF.
 
 ## Prof. Marcos Lage
 website: www.ic.uff.br/~mlage
@@ -8,7 +8,9 @@ website: www.ic.uff.br/~mlage
 e-mail: mlage@ic.uff.br
 
 ## Aulas
-Segundas e Quartas de 18 às 20h.
+### 2025.1 
+* PGC - Segundas e Quartas de 11 às 13h.
+* SI - Segundas e Quartas de 18 às 20h.
 
 
 ## Instruções
