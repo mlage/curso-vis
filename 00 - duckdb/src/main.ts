@@ -1,5 +1,12 @@
 import { Taxi } from "./taxi";
 
+declare global {
+    interface BigInt {
+        toJSON(): Number;
+    }
+}
+BigInt.prototype.toJSON = function () { return Number(this) }
+
 function createTableWithInnerHTML(data: any[]) {
     let tableHTML = '<table border="1"><tr>';
 
@@ -33,6 +40,9 @@ window.onload = async () => {
     await taxi.init();
     await taxi.loadTaxi(months);
     const data = await taxi.test(limit);
+
+    console.log("data");
+    console.log(JSON.stringify(data));
 
     createTableWithInnerHTML(data);
 
