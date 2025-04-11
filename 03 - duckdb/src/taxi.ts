@@ -35,11 +35,11 @@ export class Taxi {
         `);
     }
 
-    async queryTaxi(sql: string) {
+    async query(sql: string) {
         if (!this.db || !this.conn)
             throw new Error('Database not initialized. Please call init() first.');
-        
-        let result =  await this.conn.query(sql);
+
+        let result = await this.conn.query(sql);
         return result.toArray().map(row => row.toJSON());
     }
 
@@ -52,29 +52,19 @@ export class Taxi {
             FROM      ${this.table} 
             GROUP BY  MONTH(lpep_pickup_datetime)
         `
-        return (await this.queryTaxi(sql)).map(row => row["count_star()"].toString());
+        return (await this.query(sql)).map(row => row["count_star()"].toString());
     }
 
     async test(limit: number | undefined = undefined) {
         if (!this.db || !this.conn)
             throw new Error('Database not initialized. Please call init() first.');
-        
-        let result = null;
-        if(limit) {
-            result = await this.conn.query(`
+
+        const result = await this.conn.query(`
                 SELECT * 
                 FROM ${this.table}
                 LIMIT ${limit}
             `);
-        }
-        else {
-            result = await this.conn.query(`
-                SELECT * 
-                FROM ${this.table}
-            `);
-        }
 
-        console.log("Query finished.")
         return result.toArray().map(row => row.toJSON());
     }
 }
