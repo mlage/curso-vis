@@ -51,7 +51,7 @@ function clearChart() {
 }
 
 async function loadData() {
-    const data = await fetch('../00 - duckdb/data/taxi.json');
+    const data = await fetch('../00 - data/taxi.json');
 
     if (data) {
         const json = await data.json();

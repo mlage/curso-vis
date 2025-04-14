@@ -25,7 +25,7 @@ function createTableWithInnerHTML(data: any[]) {
 }
 
 window.onload = async () => {
-    const months = 12;
+    const months = 6;
     const limit = 50;
 
     const taxi = new Taxi();
