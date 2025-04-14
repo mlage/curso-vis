@@ -17,8 +17,6 @@ function addCircle(item, mapX, mapY) {
     circle.setAttribute('r' , 20);
 
     svg.appendChild(circle);
-    
-    return circle;
 }
 
 function loadChart() {
@@ -32,7 +30,6 @@ function loadChart() {
 
     const minTip = Math.min(...data.map(item => item.tip));
     const maxTip = Math.max(...data.map(item => item.tip));
-
     const mapY = mapeamento(minTip, maxTip, svg.clientHeight, 0);
 
     for (let i = 0; i < data.length; i++) {
@@ -55,6 +52,8 @@ function buildData(size = 50) {
 
         data.push({ distance, tip });
     }
+
+    console.log(data);
 
     return data;
 }
