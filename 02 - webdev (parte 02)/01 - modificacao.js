@@ -8,10 +8,7 @@ function addCircle() {
     circle.setAttribute('r' , 10 + Math.random() * 30);
 
     svg.appendChild(circle);
-    
-    return circle;
 }
-
 
 function deleteCircle() {
     const svg = document.querySelector('svg');
