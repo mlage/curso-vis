@@ -35,6 +35,4 @@ window.onload = async () => {
     const data = await taxi.test(limit);
 
     createTableWithInnerHTML(data);
-
-    console.log(await taxi.groupByMonth());
 };
