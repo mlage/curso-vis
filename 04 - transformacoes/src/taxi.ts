@@ -40,7 +40,7 @@ export class Taxi {
             throw new Error('Database not initialized. Please call init() first.');
 
         let result = await this.conn.query(sql);
-        return result.toArray().map(row => row.toJSON());
+        return result.toArray().map((row: Record<string, any>) => row.toJSON());
     }
 
     // -------------------
