@@ -1,14 +1,24 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<head>
+    <meta charset="UTF-8">
+    <title>Carregamento dos Dados</title>
     <link rel="stylesheet" href="index.css">
-    <title>D3.js</title>
-  </head>
-  <body>
-    <div id="app">
+</head>
+
+<body>
+    <div class="main-container">
+        <svg>
+            <g id="group"></g>
+        </svg>
+        <div class="buttom-container">
+            <button id="loadBtn">Load Chart</button>
+            <button id="clearBtn">Clear Chart</button>
+        </div>
     </div>
-    <script type="module" src="/src/main 02.ts"></script>
-  </body>
+
+    <script type="module" src="src/main.ts"></script>
+</body>
+
 </html>
