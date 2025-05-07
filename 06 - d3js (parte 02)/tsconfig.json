@@ -19,5 +19,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": ["src", "tmp/tmp 01.ts", "tmp/tmp 02.ts", "tmp/tmp 03.ts"]
 }
