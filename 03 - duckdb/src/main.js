@@ -1,6 +1,6 @@
 import { Taxi } from "./taxi";
 
-function createTableWithInnerHTML(data: any[]) {
+function createTableWithInnerHTML(data) {
     let tableHTML = '<table border="1"><tr>';
 
     Object.keys(data[0]).forEach(key => {
@@ -9,7 +9,7 @@ function createTableWithInnerHTML(data: any[]) {
 
     tableHTML += '</tr>';
 
-    data.forEach( (item: any) => {
+    data.forEach( (item) => {
         tableHTML += '<tr>';
         Object.values(item).forEach(value => {
             tableHTML += `<td>${value}</td>`;
@@ -35,4 +35,6 @@ window.onload = async () => {
     const data = await taxi.test(limit);
 
     createTableWithInnerHTML(data);
+
+    console.log('teste');
 };

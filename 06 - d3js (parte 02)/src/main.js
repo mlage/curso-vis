@@ -1,4 +1,4 @@
-import { loadChart, clearChart } from './escalas';
+import { loadChart, clearChart } from './eixos';
 
 function main() {
     const loadBtn  = document.querySelector('#loadBtn');

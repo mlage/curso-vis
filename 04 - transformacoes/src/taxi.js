@@ -3,18 +3,16 @@ import { AsyncDuckDB, AsyncDuckDBConnection } from '@duckdb/duckdb-wasm';
 import { loadDb } from './config';
 
 export class Taxi {
-    private db?: AsyncDuckDB;
-    private conn?: AsyncDuckDBConnection;
-
-    private color = "green";
-    private table = 'taxi_2023';
 
     async init() {
         this.db = await loadDb();
         this.conn = await this.db.connect();
+
+        this.color = "green";
+        this.table = 'taxi_2023';
     }
 
-    async loadTaxi(months: number = 3) {
+    async loadTaxi(months = 3) {
         if (!this.db || !this.conn)
             throw new Error('Database not initialized. Please call init() first.');
 
@@ -35,23 +33,23 @@ export class Taxi {
         `);
     }
 
-    async query(sql: string) {
+    async query(sql) {
         if (!this.db || !this.conn)
             throw new Error('Database not initialized. Please call init() first.');
 
         let result = await this.conn.query(sql);
-        return result.toArray().map((row: Record<string, any>) => row.toJSON());
+        return result.toArray().map(row => row.toJSON());
     }
 
     // -------------------
     // Transformation
     // -------------------
 
-    async select(limit: number = 50) {
+    async select(limit = 50) {
         if (!this.db || !this.conn)
             throw new Error('Database not initialized. Please call init() first.');
 
-        const cols: string[] = ['trip_distance', 'tip_amount'];
+        const cols = ['trip_distance', 'tip_amount'];
 
         const sql = `
             SELECT COLUMNS([${cols}]) 
@@ -61,7 +59,7 @@ export class Taxi {
         return await this.query(sql);
     }
 
-    async filter(limit: number = 50) {
+    async filter(limit = 50) {
         if (!this.db || !this.conn)
             throw new Error('Database not initialized. Please call init() first.');
 
@@ -77,7 +75,7 @@ export class Taxi {
         return await this.query(sql);
     }
 
-    async groupBy(limit: number = 50) {
+    async groupBy(limit = 50) {
         if (!this.db || !this.conn)
             throw new Error('Database not initialized. Please call init() first.');
 
@@ -94,7 +92,7 @@ export class Taxi {
         return await this.query(sql);
     }
 
-    async binning(limit: number = 50) {
+    async binning(limit = 50) {
         if (!this.db || !this.conn)
             throw new Error('Database not initialized. Please call init() first.');
 
@@ -117,7 +115,7 @@ export class Taxi {
         return await this.query(sql);
     }
 
-    async normalize(limit: number = 50) {
+    async normalize(limit = 50) {
         if (!this.db || !this.conn)
             throw new Error('Database not initialized. Please call init() first.');
 
@@ -134,7 +132,7 @@ export class Taxi {
         return await this.query(sql);
     }
 
-    async derive(limit: number = 50) {
+    async derive(limit = 50) {
         if (!this.db || !this.conn)
             throw new Error('Database not initialized. Please call init() first.');
 

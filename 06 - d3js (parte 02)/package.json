@@ -5,15 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@types/d3": "^7.4.3",
     "d3": "^7.9.0"
   },
   "devDependencies": {
-    "typescript": "^5.8.3",
     "vite": "^6.3.5"
   }
 }

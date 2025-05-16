@@ -1,20 +1,16 @@
-import { AsyncDuckDB, AsyncDuckDBConnection } from '@duckdb/duckdb-wasm';
 
 import { loadDb } from './config';
 
 export class Taxi {
-    private db?: AsyncDuckDB;
-    private conn?: AsyncDuckDBConnection;
-
-    private color = "green";
-    private table = 'taxi_2023';
-
     async init() {
         this.db = await loadDb();
         this.conn = await this.db.connect();
+
+        this.color = "green";
+        this.table = 'taxi_2023';
     }
 
-    async loadTaxi(months: number = 3) {
+    async loadTaxi(months = 6) {
         if (!this.db || !this.conn)
             throw new Error('Database not initialized. Please call init() first.');
 
@@ -35,7 +31,7 @@ export class Taxi {
         `);
     }
 
-    async query(sql: string) {
+    async query(sql) {
         if (!this.db || !this.conn)
             throw new Error('Database not initialized. Please call init() first.');
 
@@ -43,7 +39,7 @@ export class Taxi {
         return result.toArray().map(row => row.toJSON());
     }
 
-    async test(limit: number | undefined = undefined) {
+    async test(limit = 10) {
         if (!this.db || !this.conn)
             throw new Error('Database not initialized. Please call init() first.');
 

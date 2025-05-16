@@ -94,7 +94,7 @@ window.onload = () => {
         let nc = Math.floor(Math.random() * 50);
         let ns = Math.floor(Math.random() * 50);
 
-        const circles: { val01: number; val02: number; val03: number }[] = [];
+        const circles = [];
 
         for (let c = 0; c < nc; c++) {
             const circle = {
@@ -105,7 +105,7 @@ window.onload = () => {
             circles.push(circle);
         }
 
-        const squares: { val01: number; val02: number; val03: number }[] = [];
+        const squares = [];
 
         for (let s = 0; s < ns; s++) {
             const square = {
