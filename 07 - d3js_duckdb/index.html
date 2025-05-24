@@ -1,182 +1,281 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Análise de Corridas de Táxi</title>
+    <title>Análise de Dados - Green Taxis NYC 2023</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
         }
-
+        
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f5f5f5;
-            padding: 20px;
-        }
-
-        .main-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-        }
-
-        h1 {
             color: #333;
+            line-height: 1.6;
+        }
+        
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-
-        .chart-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-
-        .chart-box {
-            width: 48%;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-
-        .chart-title {
-            font-size: 18px;
-            font-weight: bold;
+        
+        h1 {
+            font-size: 2.5rem;
             margin-bottom: 10px;
-            text-align: center;
-            color: #2c3e50;
         }
-
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .controls {
+            text-align: center;
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            margin: 0 10px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .chart-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .chart-header {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .chart-header h2 {
+            color: #333;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .chart-description {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 500px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        
         svg {
             width: 100%;
-            height: 400px;
-            border: 1px solid #eaeaea;
-            border-radius: 4px;
+            height: 100%;
         }
-
-        .axis path,
-        .axis line {
-            stroke: #ccc;
+        
+        .analysis-section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-
-        .axis text {
-            font-size: 12px;
-            fill: #666;
+        
+        .analysis-section h3 {
+            color: #333;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+            padding-left: 15px;
         }
-
-        .dot {
-            fill: #27ae60;
-            opacity: 0.7;
-            transition: opacity 0.3s;
+        
+        .analysis-content {
+            color: #555;
+            line-height: 1.7;
         }
-
-        .dot:hover {
-            opacity: 1;
-            fill: #16a085;
+        
+        .analysis-content p {
+            margin-bottom: 15px;
         }
-
-        .bar {
-            fill: #3498db;
-            transition: fill 0.3s;
+        
+        .analysis-content ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
         }
-
-        .bar:hover {
-            fill: #2980b9;
+        
+        .analysis-content li {
+            margin-bottom: 8px;
         }
-
-        .tooltip {
+        
+        #tooltip {
             position: absolute;
-            background-color: rgba(0, 0, 0, 0.8);
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.9);
             color: white;
-            padding: 8px;
-            border-radius: 4px;
-            font-size: 12px;
+            border-radius: 6px;
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.3s;
-        }
-
-        .buttom-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        button {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        #loadBtn {
-            background-color: #2ecc71;
-            color: white;
-        }
-
-        #loadBtn:hover {
-            background-color: #27ae60;
-        }
-
-        #clearBtn {
-            background-color: #e74c3c;
-            color: white;
-        }
-
-        #clearBtn:hover {
-            background-color: #c0392b;
-        }
-
-        .legend {
             font-size: 12px;
-            fill: #666;
+            line-height: 1.4;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
-
+        
+        .dot, .bar {
+            transition: all 0.2s ease;
+        }
+        
+        .weekday-line, .weekend-line {
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+        
+        .legend {
+            background: rgba(255,255,255,0.95);
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        
         @media (max-width: 768px) {
-            .chart-box {
-                width: 100%;
+            .main-container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .chart-container {
+                height: 400px;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 14px;
+                margin: 5px;
             }
         }
     </style>
 </head>
-
 <body>
     <div class="main-container">
-        <h1>Análise de Corridas de Táxi - 2023</h1>
-        
-        <div class="chart-container">
-            <div class="chart-box">
-                <div class="chart-title">Relação entre Distância da Viagem e Valor da Gorjeta</div>
-                <svg id="scatterPlot"></svg>
+        <header>
+            <h1>Análise de Dados - Green Taxis NYC</h1>
+            <p class="subtitle">Estudo dos padrões de corridas e gorjetas no primeiro semestre de 2023</p>
+        </header>
+
+        <div class="controls">
+            <button id="loadBtn" class="btn">Carregar Gráficos</button>
+            <button id="clearBtn" class="btn">Limpar Gráficos</button>
+        </div>
+
+        <div class="charts-container">
+            <!-- Pergunta A: Padrão de corridas durante a semana -->
+            <div class="chart-section">
+                <div class="chart-header">
+                    <h2>A. Padrão de Corridas: Dias de Semana vs Fim de Semana</h2>
+                    <div class="chart-description">
+                        <p><strong>Visualização:</strong> Gráfico de linhas comparativo mostrando o número de corridas por hora do dia, diferenciando entre dias de semana e finais de semana.</p>
+                        <p><strong>Justificativa:</strong> Esta visualização permite identificar claramente os padrões temporais e diferenças de comportamento entre dias úteis e fins de semana, facilitando a comparação direta entre os dois períodos.</p>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <svg id="scatterPlot"></svg>
+                </div>
             </div>
-            <div class="chart-box">
-                <div class="chart-title">Distribuição de Gorjetas por Faixa de Distância</div>
-                <svg id="barChart"></svg>
+
+            <!-- Pergunta B: Relação entre gorjeta e horário -->
+            <div class="chart-section">
+                <div class="chart-header">
+                    <h2>B. Relação entre Valor da Gorjeta e Horário das Corridas</h2>
+                    <div class="chart-description">
+                        <p><strong>Visualização:</strong> Gráfico de barras com gradiente de cores mostrando o valor médio das gorjetas por hora do dia, complementado por uma linha de tendência.</p>
+                        <p><strong>Justificativa:</strong> O gráfico de barras permite visualizar facilmente os valores absolutos, enquanto o gradiente de cores e a linha de tendência destacam os padrões temporais da generosidade dos passageiros.</p>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <svg id="barChart"></svg>
+                </div>
             </div>
         </div>
-        
-        <div class="buttom-container">
-            <button id="loadBtn">Carregar Gráficos</button>
-            <button id="clearBtn">Limpar Gráficos</button>
+
+        <!-- Análises das visualizações -->
+        <div class="analysis-section">
+            <h3>Análise das Informações Obtidas</h3>
+            <div class="analysis-content">
+                <p><strong>Pergunta A - Diferenças entre padrões de corridas:</strong></p>
+                <ul>
+                    <li><strong>Dias de semana:</strong> Apresentam picos característicos nos horários de rush (7-9h e 17-19h), refletindo o movimento de deslocamento para trabalho e estudos. O padrão é mais previsível e estruturado.</li>
+                    <li><strong>Fins de semana:</strong> Mostram um padrão mais distribuído ao longo do dia, com pico tardio (19-23h) relacionado ao lazer noturno. Menor movimento matinal comparado aos dias úteis.</li>
+                    <li><strong>Insights:</strong> A diferença confirma que o comportamento de mobilidade urbana é fortemente influenciado pela rotina de trabalho, com os táxis servindo tanto para necessidades profissionais quanto de lazer.</li>
+                </ul>
+
+                <p><strong>Pergunta B - Relação entre gorjeta e horário:</strong></p>
+                <ul>
+                    <li><strong>Horários de maior generosidade:</strong> Geralmente observados durante a noite e madrugada, quando os passageiros podem estar mais dispostos a dar gorjetas maiores.</li>
+                    <li><strong>Horários comerciais:</strong> Tendem a apresentar gorjetas mais moderadas e consistentes, possivelmente devido ao caráter mais utilitário das viagens.</li>
+                    <li><strong>Insights:</strong> A variação das gorjetas por horário pode estar relacionada ao contexto da viagem (lazer vs. trabalho), disponibilidade financeira momentânea dos passageiros, e qualidade percebida do serviço em diferentes períodos.</li>
+                </ul>
+
+                <p><strong>Conclusões Gerais:</strong></p>
+                <p>As análises revelam que o serviço de táxi em NYC possui padrões comportamentais distintos que refletem os ritmos da vida urbana. O entendimento desses padrões é crucial para otimização de frotas, definição de tarifas dinâmicas e planejamento de recursos no setor de transporte urbano.</p>
+            </div>
         </div>
     </div>
 
-    <div class="tooltip" id="tooltip"></div>
+    <!-- Tooltip para interatividade -->
+    <div id="tooltip"></div>
 
     <script type="module" src="src/main.js"></script>
 </body>
-
 </html>
