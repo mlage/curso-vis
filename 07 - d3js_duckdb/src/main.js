@@ -1,7 +1,7 @@
 import { Taxi } from "./taxi";
 import { loadChart, clearChart } from './plot';
 
-// Função que inicializa os callbacks para os botões
+
 function setupEventListeners(data) {
     const loadBtn = document.querySelector('#loadBtn');
     const clearBtn = document.querySelector('#clearBtn');
@@ -22,7 +22,7 @@ function setupEventListeners(data) {
             await loadChart(data);
             loadBtn.textContent = "Carregar Gráficos";
         } catch (error) {
-            console.error("Erro ao carregar os gráficos:", error);
+
             loadBtn.textContent = "Erro ao Carregar";
         } finally {
             loadBtn.disabled = false;
@@ -34,10 +34,10 @@ function setupEventListeners(data) {
     });
 }
 
-// Função principal que é executada quando a página carrega
+
 window.onload = async () => {
     try {
-        console.log("Inicializando aplicação...");
+
         
         // Adicionar mensagem de carregamento temporária
         const mainContainer = document.querySelector('.main-container');
@@ -56,13 +56,10 @@ window.onload = async () => {
         const taxi = new Taxi();
         await taxi.init();
         
-        console.log("Banco de dados inicializado, carregando dados de táxi...");
-        // Carregar 6 primeiros meses de 2023 conforme solicitado no trabalho
+
         await taxi.loadTaxi(6);
         
-        console.log("Executando consulta SQL para análise...");
-        
-        // Consulta SQL otimizada para responder às perguntas do trabalho
+
         const sql = `
             SELECT
                 lpep_pickup_datetime,
@@ -74,25 +71,14 @@ window.onload = async () => {
                 payment_type
             FROM
                 taxi_2023
-            WHERE
-                lpep_pickup_datetime IS NOT NULL AND
-                tip_amount >= 0 AND
-                tip_amount <= 50 AND
-                fare_amount > 0 AND
-                fare_amount <= 200 AND
-                trip_distance > 0 AND
-                trip_distance <= 50 AND
-                passenger_count >= 1 AND
-                passenger_count <= 6
-            ORDER BY RANDOM()
             LIMIT 5000
         `;
         
-        // Executar a consulta e obter os dados
+
         const data = await taxi.query(sql);
-        console.log("Dados obtidos:", data.length, "registros");
+
         
-        // Validar e processar os dados
+
         const validData = data.filter(d => {
             try {
                 const date = new Date(d.lpep_pickup_datetime);
@@ -105,16 +91,16 @@ window.onload = async () => {
             }
         });
         
-        console.log("Dados válidos:", validData.length, "registros");
+
         
         if (validData.length === 0) {
             throw new Error("Nenhum dado válido encontrado!");
         }
         
-        // Remover mensagem de carregamento
+
         mainContainer.removeChild(loadingMsg);
         
-        // Adicionar informações sobre os dados carregados
+
         const infoDiv = document.createElement('div');
         infoDiv.style.textAlign = 'center';
         infoDiv.style.padding = '10px';
@@ -124,30 +110,26 @@ window.onload = async () => {
         infoDiv.style.marginBottom = '20px';
         infoDiv.innerHTML = `
             <strong>Dados Carregados:</strong> ${validData.length} corridas de táxi | 
-            <strong>Período:</strong> Primeiros 6 meses de 2023 | 
-            <strong>Fonte:</strong> Green Taxis NYC
+            <strong>Período:</strong> Primeiros 6 meses de 2023
         `;
         mainContainer.insertBefore(infoDiv, mainContainer.firstChild);
         
-        // Configurar os eventos dos botões
         setupEventListeners(validData);
         
-        // Carregar os gráficos automaticamente
         await loadChart(validData);
         
-        console.log("Aplicação inicializada com sucesso!");
+
         
     } catch (error) {
-        console.error("Erro ao inicializar a aplicação:", error);
+
         
-        // Remover mensagem de carregamento se ainda existir
+
         const loadingMsg = document.querySelector('.main-container div');
         if (loadingMsg && loadingMsg.textContent.includes('Carregando dados')) {
             loadingMsg.remove();
         }
         
-        // Mostrar mensagem de erro
-        const mainContainer = document.querySelector('.main-container');
+         const mainContainer = document.querySelector('.main-container');
         const errorDiv = document.createElement('div');
         errorDiv.style.textAlign = 'center';
         errorDiv.style.padding = '20px';

@@ -1,212 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Análise de Dados - Green Taxis NYC 2023</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
-            line-height: 1.6;
-        }
-        
-        .main-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-        
-        .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-        
-        .controls {
-            text-align: center;
-            margin-bottom: 30px;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            margin: 0 10px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-        }
-        
-        .btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        .charts-container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-        
-        .chart-section {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .chart-header {
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #eee;
-        }
-        
-        .chart-header h2 {
-            color: #333;
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-        
-        .chart-description {
-            color: #666;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-        
-        .chart-container {
-            position: relative;
-            height: 500px;
-            border: 2px solid #e1e5e9;
-            border-radius: 8px;
-            background: #fafafa;
-        }
-        
-        svg {
-            width: 100%;
-            height: 100%;
-        }
-        
-        .analysis-section {
-            background: white;
-            border-radius: 10px;
-            padding: 25px;
-            margin-top: 30px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .analysis-section h3 {
-            color: #333;
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            border-left: 4px solid #667eea;
-            padding-left: 15px;
-        }
-        
-        .analysis-content {
-            color: #555;
-            line-height: 1.7;
-        }
-        
-        .analysis-content p {
-            margin-bottom: 15px;
-        }
-        
-        .analysis-content ul {
-            margin-left: 20px;
-            margin-bottom: 15px;
-        }
-        
-        .analysis-content li {
-            margin-bottom: 8px;
-        }
-        
-        #tooltip {
-            position: absolute;
-            padding: 12px;
-            background: rgba(0, 0, 0, 0.9);
-            color: white;
-            border-radius: 6px;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-size: 12px;
-            line-height: 1.4;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-        }
-        
-        .dot, .bar {
-            transition: all 0.2s ease;
-        }
-        
-        .weekday-line, .weekend-line {
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-        }
-        
-        .legend {
-            background: rgba(255,255,255,0.95);
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
-        
-        @media (max-width: 768px) {
-            .main-container {
-                padding: 10px;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .chart-container {
-                height: 400px;
-            }
-            
-            .btn {
-                padding: 10px 20px;
-                font-size: 14px;
-                margin: 5px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="index.css">
 </head>
+
 <body>
     <div class="main-container">
         <header>
@@ -225,8 +26,11 @@
                 <div class="chart-header">
                     <h2>A. Padrão de Corridas: Dias de Semana vs Fim de Semana</h2>
                     <div class="chart-description">
-                        <p><strong>Visualização:</strong> Gráfico de linhas comparativo mostrando o número de corridas por hora do dia, diferenciando entre dias de semana e finais de semana.</p>
-                        <p><strong>Justificativa:</strong> Esta visualização permite identificar claramente os padrões temporais e diferenças de comportamento entre dias úteis e fins de semana, facilitando a comparação direta entre os dois períodos.</p>
+                        <p><strong>Visualização:</strong> Gráfico de linhas comparativo mostrando o número de corridas
+                            por hora do dia, diferenciando entre dias de semana e finais de semana.</p>
+                        <p><strong>Justificativa:</strong> Esta visualização permite identificar claramente os padrões
+                            temporais e diferenças de comportamento entre dias úteis e fins de semana, facilitando a
+                            comparação direta entre os dois períodos.</p>
                     </div>
                 </div>
                 <div class="chart-container">
@@ -239,8 +43,11 @@
                 <div class="chart-header">
                     <h2>B. Relação entre Valor da Gorjeta e Horário das Corridas</h2>
                     <div class="chart-description">
-                        <p><strong>Visualização:</strong> Gráfico de barras com gradiente de cores mostrando o valor médio das gorjetas por hora do dia, complementado por uma linha de tendência.</p>
-                        <p><strong>Justificativa:</strong> O gráfico de barras permite visualizar facilmente os valores absolutos, enquanto o gradiente de cores e a linha de tendência destacam os padrões temporais da generosidade dos passageiros.</p>
+                        <p><strong>Visualização:</strong> Gráfico de barras com gradiente de cores mostrando o valor
+                            médio das gorjetas por hora do dia.</p>
+                        <p><strong>Justificativa:</strong> O gráfico de barras permite visualizar facilmente os valores
+                            absolutos, enquanto o gradiente de cores destaca os diferentes níveis de gorjetas ao longo
+                            do dia.</p>
                     </div>
                 </div>
                 <div class="chart-container">
@@ -255,20 +62,60 @@
             <div class="analysis-content">
                 <p><strong>Pergunta A - Diferenças entre padrões de corridas:</strong></p>
                 <ul>
-                    <li><strong>Dias de semana:</strong> Apresentam picos característicos nos horários de rush (7-9h e 17-19h), refletindo o movimento de deslocamento para trabalho e estudos. O padrão é mais previsível e estruturado.</li>
-                    <li><strong>Fins de semana:</strong> Mostram um padrão mais distribuído ao longo do dia, com pico tardio (19-23h) relacionado ao lazer noturno. Menor movimento matinal comparado aos dias úteis.</li>
-                    <li><strong>Insights:</strong> A diferença confirma que o comportamento de mobilidade urbana é fortemente influenciado pela rotina de trabalho, com os táxis servindo tanto para necessidades profissionais quanto de lazer.</li>
+                    <li>
+                        1. Atividade nas Madrugadas (0h–4h)
+                        Fins de semana apresentam maior número de corridas nas primeiras horas do dia (0h–2h), com um
+                        pico
+                        modesto à meia-noite.
+
+                        Dias de semana têm menor volume de corridas nesse período, o que sugere menor atividade noturna,
+                        possivelmente porque a maioria das pessoas trabalha no dia seguinte.
+                    </li>
+                    <li>
+                        2. Aumento Abrupto pela Manhã (4h–8h)
+                        Há um aumento súbito nas corridas nos dias de semana por volta das 4h até 6h, com o número de
+                        corridas ultrapassando 250 por hora.
+
+                        Nos fins de semana, esse aumento é muito mais suave e começa mais tarde, com valores abaixo de
+                        100
+                        corridas por hora.
+                    </li>
+                    <li>
+                        3. Padrão Estável ao Longo do Dia (8h–16h)
+                        Em dias de semana, o volume de corridas permanece relativamente alto e estável.
+
+                        Em fins de semana, observa-se um leve crescimento com um pico modesto entre 11h e 13h, mas o
+                        volume
+                        total ainda é bem inferior ao dos dias úteis.
+                    </li>
+                    <li>4.Queda no Final da Tarde e Noite (17h–23h)
+                        Dias de semana apresentam uma queda acentuada após as 17h, refletindo o fim do expediente.
+
+                        Fins de semana mantêm um ritmo mais constante e baixo de corridas até o final da noite, com leve
+                        queda a partir das 20h.
+                </ul>
                 </ul>
 
                 <p><strong>Pergunta B - Relação entre gorjeta e horário:</strong></p>
                 <ul>
-                    <li><strong>Horários de maior generosidade:</strong> Geralmente observados durante a noite e madrugada, quando os passageiros podem estar mais dispostos a dar gorjetas maiores.</li>
-                    <li><strong>Horários comerciais:</strong> Tendem a apresentar gorjetas mais moderadas e consistentes, possivelmente devido ao caráter mais utilitário das viagens.</li>
-                    <li><strong>Insights:</strong> A variação das gorjetas por horário pode estar relacionada ao contexto da viagem (lazer vs. trabalho), disponibilidade financeira momentânea dos passageiros, e qualidade percebida do serviço em diferentes períodos.</li>
-                </ul>
+                    <li>1. Pico de Gorjetas: Horário de Maior Generosidade
+                        19h (7 da noite) é o horário com maior valor médio de gorjeta, ultrapassando $2,6.</li>
+                    <li>2. Vales de Gorjetas: Horários de Menor Generosidade
+                        Os horários com menores valores médios de gorjeta são:
 
-                <p><strong>Conclusões Gerais:</strong></p>
-                <p>As análises revelam que o serviço de táxi em NYC possui padrões comportamentais distintos que refletem os ritmos da vida urbana. O entendimento desses padrões é crucial para otimização de frotas, definição de tarifas dinâmicas e planejamento de recursos no setor de transporte urbano.</p>
+                        0h (meia-noite)
+
+                        3h
+
+                        17h
+
+                        21h–23h</li>
+                    <li>3. Regularidade ao Longo do Dia
+                        Ao longo da manhã e tarde, o valor das gorjetas varia pouco, com médias entre $1,8 e $2,2.
+
+                        Os picos e vales são bem localizados e pontuais, sugerindo que o comportamento dos usuários muda
+                        com o contexto do horário.</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -278,4 +125,5 @@
 
     <script type="module" src="src/main.js"></script>
 </body>
+
 </html>
