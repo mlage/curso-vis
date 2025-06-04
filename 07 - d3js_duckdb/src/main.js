@@ -59,6 +59,19 @@ window.onload = async () => {
 
         await taxi.loadTaxi(6);
         
+        // lpep_pickup_datetime: data e hora de início da corrida.
+
+        // tip_amount: valor da gorjeta.
+
+        // fare_amount: valor da tarifa da corrida.
+
+        // total_amount: valor total da corrida (geralmente inclui tarifa, gorjeta, taxas etc.).
+
+        // passenger_count: número de passageiros.
+
+        // trip_distance: distância da viagem.
+
+        // payment_type: tipo de pagamento utilizado (por exemplo, cartão, dinheiro etc.).
 
         const sql = `
             SELECT
@@ -66,15 +79,13 @@ window.onload = async () => {
                 tip_amount,
                 fare_amount,
                 total_amount,
-                passenger_count,
                 trip_distance,
                 payment_type
             FROM
                 taxi_2023
             LIMIT 5000
         `;
-        
-
+    
         const data = await taxi.query(sql);
 
         

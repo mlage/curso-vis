@@ -201,14 +201,12 @@ async function loadWeekdayPatternChart(data, margins) {
         });
 }
 
-
 async function loadTipByHourChart(data, margins) {
     const svg = d3.select('#barChart');
     if (!svg.node()) return;
 
     const width = +svg.node().clientWidth - margins.left - margins.right;
     const height = +svg.node().clientHeight - margins.top - margins.bottom;
-
 
     const hourlyTips = [];
     
@@ -231,7 +229,6 @@ async function loadTipByHourChart(data, margins) {
         }
     }
 
-
     const xScale = d3.scaleBand()
         .domain(hourlyTips.map(d => d.formattedHour))
         .range([0, width])
@@ -242,10 +239,8 @@ async function loadTipByHourChart(data, margins) {
         .domain([0, maxTip])
         .range([height, 0]);
 
-
     const colorScale = d3.scaleSequential(d3.interpolateViridis)
         .domain([0, d3.max(hourlyTips, d => d.avgTip)]);
-
 
     const xAxis = d3.axisBottom(xScale);
     const groupX = svg.selectAll('#bar-axisX').data([0]);
@@ -256,7 +251,6 @@ async function loadTipByHourChart(data, margins) {
         .call(xAxis)
         .selectAll("text")
         .style("text-anchor", "middle");
-
 
     svg.selectAll('.x-label-bar').data([0]).join('text')
         .attr('class', 'x-label-bar')
@@ -285,7 +279,6 @@ async function loadTipByHourChart(data, margins) {
         .style('font-size', '14px')
         .style('fill', '#333');
 
-
     svg.selectAll('.chart-title-bar').data([0]).join('text')
         .attr('class', 'chart-title-bar')
         .attr('text-anchor', 'middle')
@@ -296,12 +289,10 @@ async function loadTipByHourChart(data, margins) {
         .style('font-weight', 'bold')
         .style('fill', '#333');
 
-
     const selection = svg.selectAll('#bar-group').data([0]);
     const bGroup = selection.join('g')
         .attr('id', 'bar-group')
         .attr('transform', `translate(${margins.left}, ${margins.top})`);
-
 
     bGroup.selectAll('.bar')
         .data(hourlyTips)
@@ -313,11 +304,55 @@ async function loadTipByHourChart(data, margins) {
         .attr('height', d => height - yScale(d.avgTip))
         .attr('fill', d => colorScale(d.avgTip))
         .attr('stroke', '#fff')
-        .attr('stroke-width', 1)
+        .attr('stroke-width', 1);
 
+    // === LEGENDA DE CORES ===
+    const legendWidth = 200;
+    const legendHeight = 10;
+    const legendMarginTop = 40;
 
+    const legendX = d3.scaleLinear()
+        .domain(colorScale.domain())
+        .range([0, legendWidth]);
+
+    const defs = svg.append("defs");
+    const linearGradient = defs.append("linearGradient")
+        .attr("id", "legend-gradient");
+
+    linearGradient.selectAll("stop")
+        .data(d3.range(0, 1.01, 0.01))
+        .enter()
+        .append("stop")
+        .attr("offset", d => `${d * 100}%`)
+        .attr("stop-color", d => d3.interpolateViridis(d));
+
+    const legendGroup = svg.append("g")
+        .attr("transform", `translate(${width - legendWidth + margins.left}, ${margins.top + height + legendMarginTop})`);
+
+    legendGroup.append("rect")
+        .attr("width", legendWidth)
+        .attr("height", legendHeight)
+        .style("fill", "url(#legend-gradient)");
+
+    const legendAxis = d3.axisBottom(legendX)
+        .ticks(5)
+        .tickFormat(d => `$${d.toFixed(1)}`);
+
+    legendGroup.append("g")
+        .attr("transform", `translate(0, ${legendHeight})`)
+        .call(legendAxis)
+        .selectAll("text")
+        .style("font-size", "12px")
+        .style("fill", "#333");
+
+    legendGroup.append("text")
+        .attr("x", legendWidth / 2)
+        .attr("y", -8)
+        .attr("text-anchor", "middle")
+        .style("font-size", "12px")
+        .style("fill", "#333")
+        .text("Valor Médio da Gorjeta ($)");
 }
-
 
 export function clearChart() {
 
