@@ -11,7 +11,8 @@ export async function loadMap(geojson, margens = { left: 5, right: 5, top: 5, bo
     const width = +svg.node().getBoundingClientRect().width - margens.left - margens.right;
     const height = +svg.node().getBoundingClientRect().height - margens.top - margens.bottom;
 
-    let projection = d3.geoMercator().fitExtent([[0, 0], [width, height]], geojson);
+    let projection = d3.geoMercator().
+            fitExtent([[0, 0], [width, height]], geojson);
 
     let path = d3.geoPath()
         .projection(projection);

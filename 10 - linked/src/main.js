@@ -10,7 +10,9 @@ function callbacks(data) {
     }
 
     loadBtn.addEventListener('click', async () => {
-        clearChart();
+        clearChart('#chart01');
+        clearChart('#chart02');
+
         await loadChart('#chart01', data, ['trip_distance', 'fare_amount']);
         await loadChart('#chart02', data, ['trip_distance', 'tip_amount']);
     });

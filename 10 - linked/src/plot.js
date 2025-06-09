@@ -52,7 +52,7 @@ export async function loadChart(id, data, cols, margens = { left: 50, right: 25,
 
     circles.enter()
         .append('circle')
-        .attr('cx', d => { console.log(d); return mapX(+d[cols[0]]); })
+        .attr('cx', d => mapX(+d[cols[0]]))
         .attr('cy', d => mapY(+d[cols[1]]))
         .attr('r', 6)
         .style('fill', 'lightgray');
@@ -99,7 +99,9 @@ export function clearChart(id) {
 function brushed(chartId) {
     const sId = chartId.split('#')[1];
 
-    return ({ selection }) => {
+    return (event) => {
+        const selection = event.selection;
+
         if (selection !== null) {
             selected[sId] = [];
 
@@ -110,6 +112,7 @@ function brushed(chartId) {
                     const cy = d3.select(this).attr("cy");
 
                     const isBrushed = selection[0][0] <= cx && selection[1][0] >= cx && selection[0][1] <= cy && selection[1][1] >= cy;
+
                     if (isBrushed) {
                         selected[sId].push(id);
                     }
