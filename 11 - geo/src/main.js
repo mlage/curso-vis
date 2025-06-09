@@ -19,10 +19,8 @@ function callbacks(data) {
 }
 
 window.onload = async () => {
-    const response = await fetch('../00 - data/nyc-neighs.json');
-    const neighs = await response.text();
-
-    console.log({ neighs });
+    const response = await fetch('nyc-neighs.json');
+    const neighs = await response.json();
 
     callbacks(neighs);
 };
