@@ -4,7 +4,6 @@ import { loadChart, clearChart } from './plot';
 function callbacks(data) {
     const loadBtn   = document.querySelector('#loadBtn');
     const clearBtn  = document.querySelector('#clearBtn');
-    const colorDrop = document.querySelector('#colorDrop');
 
     if (!loadBtn || !clearBtn) {
         return;
@@ -12,16 +11,13 @@ function callbacks(data) {
 
     loadBtn.addEventListener('click', async () => {
         clearChart();
-        await loadChart(data, colorDrop.value);
-    });
-
-    colorDrop.addEventListener('change', async () => {
-        clearChart();
-        await loadChart(data, colorDrop.value);
+        await loadChart('#chart01', data, ['trip_distance', 'fare_amount']);
+        await loadChart('#chart02', data, ['trip_distance', 'tip_amount']);
     });
 
     clearBtn.addEventListener('click', async () => {
-        clearChart();
+        clearChart('#chart01');
+        clearChart('#chart02');
     });
 }
 
@@ -35,11 +31,10 @@ window.onload = async () => {
         SELECT
             trip_distance,
             tip_amount,
-            total_amount,
-            payment_type
+            fare_amount
         FROM
             taxi_2023
-        LIMIT ${100}
+        LIMIT ${20}
     `;
 
     const data = await taxi.query(sql);

@@ -31,7 +31,7 @@ window.onload = async () => {
             tip_amount
         FROM
             taxi_2023
-        LIMIT ${100}
+        LIMIT ${150}
     `;
 
     const data = await taxi.query(sql);

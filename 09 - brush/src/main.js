@@ -4,7 +4,6 @@ import { loadChart, clearChart } from './plot';
 function callbacks(data) {
     const loadBtn   = document.querySelector('#loadBtn');
     const clearBtn  = document.querySelector('#clearBtn');
-    const colorDrop = document.querySelector('#colorDrop');
 
     if (!loadBtn || !clearBtn) {
         return;
@@ -12,12 +11,7 @@ function callbacks(data) {
 
     loadBtn.addEventListener('click', async () => {
         clearChart();
-        await loadChart(data, colorDrop.value);
-    });
-
-    colorDrop.addEventListener('change', async () => {
-        clearChart();
-        await loadChart(data, colorDrop.value);
+        await loadChart(data);
     });
 
     clearBtn.addEventListener('click', async () => {
@@ -39,7 +33,7 @@ window.onload = async () => {
             payment_type
         FROM
             taxi_2023
-        LIMIT ${100}
+        LIMIT ${20}
     `;
 
     const data = await taxi.query(sql);

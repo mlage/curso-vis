@@ -16,8 +16,8 @@ export async function loadChart(data, colorType, margens = { left: 50, right: 25
     const mapY = d3.scaleLinear().domain(tipExtent).range([+svg.style("height").split("px")[0] - margens.bottom - margens.top, 0]);
 
     const cExtent = colorType === '0' ? d3.extent(data, d => d.total_amount) : [...new Set(data.map(d => d.payment_type))];
-    const mapC = colorType === '0' ? d3.scaleSequential(d3.interpolateBlues).domain(cExtent) : 
-        d3.scaleOrdinal(d3.schemeCategory10).domain(cExtent);
+    const mapC = colorType === '0' ? d3.scaleSequential(d3.interpolatePlasma).domain(cExtent) : 
+        d3.scaleOrdinal(d3.schemeObservable10).domain(cExtent);
 
     // ---- Eixos
     const xAxis  = d3.axisBottom(mapX);
@@ -52,8 +52,8 @@ export async function loadChart(data, colorType, margens = { left: 50, right: 25
         .append('circle')
         .attr('cx', d => mapX(d.trip_distance))
         .attr('cy', d => mapY(d.tip_amount))
-        .attr('r', 4)
-        .style('fill', d => mapC( colorType === '0' ? d.total_amount : d.payment_type));
+        .attr('r', 6)
+        .style('fill', d => mapC( colorType === '0' ? d.total_amount : d.payment_type ));
 
     circles.exit()
         .remove();
@@ -61,8 +61,8 @@ export async function loadChart(data, colorType, margens = { left: 50, right: 25
     circles
         .attr('cx', d => mapX(d.trip_distance))
         .attr('cy', d => mapY(d.tip_amount))
-        .attr('r', 4)
-        .style('fill', d => mapC( colorType === '0' ? d.total_amount : d.payment_type));
+        .attr('r', 6)
+        .style('fill', d => mapC( colorType === '0' ? d.total_amount : d.payment_type ));
 
     d3.select('#group')
         .attr('transform', `translate(${margens.left}, ${margens.top})`);
