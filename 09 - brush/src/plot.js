@@ -8,8 +8,9 @@ export async function loadChart(data, margens = { left: 50, right: 25, top: 25, 
         return;
     }
 
-    const width = parseInt(svg.node().getBoundingClientRect().width) - margens.left - margens.right;
-    const height = parseInt(svg.node().getBoundingClientRect().height) - margens.top - margens.bottom;
+    // ---- Tamanho do Gráfico
+    const width  = +svg.node().getBoundingClientRect().width  - margens.left - margens.right;
+    const height = +svg.node().getBoundingClientRect().height - margens.top  - margens.bottom;
 
     // ---- Escalas
     const distExtent = d3.extent(data, d => d.trip_distance);
@@ -37,11 +38,12 @@ export async function loadChart(data, margens = { left: 50, right: 25, top: 25, 
         .attr('transform', `translate(${margens.left}, ${margens.top})`)
         .call(yAxis);
 
-
     // ---- Círculos
-    const selection = svg.selectAll('#group').data([0]);
-    const cGroup = selection.join('g')
-        .attr('id', 'group');
+    const cGroup = svg.selectAll('#chartGroup')
+        .data([0])
+        .join('g')
+        .attr('id', 'chartGroup')
+        .attr('transform', `translate(${margens.left}, ${margens.top})`);
 
     const circles = cGroup.selectAll('circle')
         .data(data);
@@ -62,9 +64,6 @@ export async function loadChart(data, margens = { left: 50, right: 25, top: 25, 
         .attr('r', 6)
         .style('fill', 'gray');
 
-    d3.select('#group')
-        .attr('transform', `translate(${margens.left}, ${margens.top})`);
-
     // ---- Brush
 
     const brush = d3.brush()
@@ -80,7 +79,7 @@ export async function loadChart(data, margens = { left: 50, right: 25, top: 25, 
 }
 
 export function clearChart() {
-    d3.select('#group')
+    d3.select('#chartGroup')
         .selectAll('circle')
         .remove();
 
@@ -98,17 +97,15 @@ export function clearChart() {
 // Function that is triggered when brushing is performed
 function brushed({ selection }) {
     if (selection !== null) {
-        console.log("Brushing...", selection);
-
-        d3.select("#group")
+        d3.select("#chartGroup")
             .selectAll("circle")
-            .each(function (d, id) {
+            .each(function () {
                 const cx = d3.select(this).attr("cx");
                 const cy = d3.select(this).attr("cy");
 
                 // Check if the circle is within the brushed area
                 const isBrushed = selection[0][0] <= cx && selection[1][0] >= cx &&
-                    selection[0][1] <= cy && selection[1][1] >= cy;
+                                  selection[0][1] <= cy && selection[1][1] >= cy;
 
                 d3.select(this).style('fill', isBrushed ? 'blue' : 'gray');
             });

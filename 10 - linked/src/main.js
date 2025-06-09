@@ -40,8 +40,6 @@ window.onload = async () => {
     `;
 
     const data = await taxi.query(sql);
-    console.log(data);
-
     callbacks(data);
 };
 
