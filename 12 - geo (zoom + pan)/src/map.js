@@ -9,11 +9,11 @@ export async function loadMap(geojson, margens = { left: 5, right: 5, top: 5, bo
     }
 
     // ---- Tamanho do Gráfico
-    const width  = +svg.node().getBoundingClientRect().width  - margens.left - margens.right;
-    const height = +svg.node().getBoundingClientRect().height - margens.top  - margens.bottom;
+    const width = +svg.node().getBoundingClientRect().width - margens.left - margens.right;
+    const height = +svg.node().getBoundingClientRect().height - margens.top - margens.bottom;
 
     let projection = d3.geoMercator().
-            fitExtent([[0, 0], [width, height]], geojson);
+        fitExtent([[0, 0], [width, height]], geojson);
 
     let path = d3.geoPath()
         .projection(projection);
@@ -30,10 +30,23 @@ export async function loadMap(geojson, margens = { left: 5, right: 5, top: 5, bo
         .attr('d', path)
         .style('fill', 'lightgray')
         .style('stroke', 'black');
+
+    // ---- Zoom e Pan
+    const zoom = d3.zoom()
+        .scaleExtent([1, 8])
+        .on('zoom', handleZoom);
+
+    svg.call(zoom);
 }
 
 export function clearMap() {
     d3.select('#group')
         .selectAll('path')
         .remove();
+}
+
+function handleZoom({ transform }) {
+    d3.select('#group')
+        .selectAll('path')
+        .attr('transform', transform);
 }
