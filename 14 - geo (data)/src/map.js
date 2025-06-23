@@ -23,8 +23,8 @@ export async function loadMap(geojson, margens = { left: 5, right: 5, top: 5, bo
     const height = +svg.node().getBoundingClientRect().height - margens.top - margens.bottom;
 
     // Color Scale
-    const colorScale = d3.scaleSequential(d3.interpolateBlues)
-        .domain([0, 10]);
+    const colorScale = d3.scaleSequential(d3.interpolateReds)
+        .domain([0, 1]);
 
     let projection = d3.geoMercator().
         fitExtent([[0, 0], [width, height]], geojson);
@@ -50,7 +50,6 @@ export async function loadMap(geojson, margens = { left: 5, right: 5, top: 5, bo
     const zoom = d3.zoom()
         .scaleExtent([1, 8])
         .on('zoom', handleZoom);
-
     svg.call(zoom);
 }
 
@@ -81,12 +80,15 @@ async function queryTaxiData(origin) {
 }
 
 function handleClick(event) {
+    console.log(event);
+
     if (event.metaKey && event.target.tagName === 'path') {
         const pathData = d3.select(this).datum();
 
         queryTaxiData(pathData.properties.objectid).then(data => {
+            console.log('GroupBy:', data);
 
-            // Query data
+            // Query data (deve poder resolver no duckdb)
             const intData = data.map(d => ({
                 DOLocationID: Number(d.DOLocationID),
                 count: Number(d.count)
@@ -94,7 +96,7 @@ function handleClick(event) {
 
             // Color Scale
             const domainExtent = d3.extent(intData, d => d.count);
-            const colorScale = d3.scaleSequential(d3.interpolateBlues)
+            const colorScale = d3.scaleSequential(d3.interpolateReds)
                 .domain(domainExtent);
 
             // Update Colors
@@ -105,7 +107,7 @@ function handleClick(event) {
 
                     return colorScale(count);
                 }
-            );
+                );
 
             // Highlight Selection
             d3.select(this)

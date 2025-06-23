@@ -12,14 +12,14 @@ export async function loadMap(geojson, margens = { left: 5, right: 5, top: 5, bo
     const width  = +svg.node().getBoundingClientRect().width  - margens.left - margens.right;
     const height = +svg.node().getBoundingClientRect().height - margens.top  - margens.bottom;
 
-    let projection = d3.geoMercator().
-            fitExtent([[0, 0], [width, height]], geojson);
+    let projection = d3.geoMercator()
+        .fitExtent([[0, 0], [width, height]], geojson);
 
-    let path = d3.geoPath()
+    let pathBuilder = d3.geoPath()
         .projection(projection);
 
     const mGroup = svg.selectAll('#group')
-        .data([0])
+        .data([''])
         .join('g')
         .attr('id', 'group')
         .attr('transform', `translate(${margens.left}, ${margens.top})`);
@@ -27,7 +27,7 @@ export async function loadMap(geojson, margens = { left: 5, right: 5, top: 5, bo
     mGroup.selectAll('path')
         .data(geojson.features)
         .join('path')
-        .attr('d', path)
+        .attr('d', pathBuilder)
         .style('fill', 'lightgray')
         .style('stroke', 'black');
 }
@@ -37,5 +37,3 @@ export function clearMap() {
         .selectAll('path')
         .remove();
 }
-
-

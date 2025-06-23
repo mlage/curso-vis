@@ -1,6 +1,5 @@
 import * as d3 from 'd3';
 
-
 export async function loadChart(data, margens = { left: 50, right: 25, top: 25, bottom: 60 }) {
     const svg = d3.select('svg');
 
@@ -71,7 +70,7 @@ export async function loadChart(data, margens = { left: 50, right: 25, top: 25, 
         .extent([[0, 0], [width, height]])
         .on("start brush end", brushed);
 
-    cGroup.append("g")
+        cGroup.append("g")
         .attr("id", "brushGroup")
         .attr("class", "brush")
         .call(brush)
@@ -94,19 +93,20 @@ export function clearChart() {
     d3.select('#brushGroup').remove();
 }
 
-// Function that is triggered when brushing is performed
-function brushed({ selection }) {
+function brushed(event) {
+    const selection = event.selection;
+
     if (selection !== null) {
         d3.select("#chartGroup")
             .selectAll("circle")
-            .each(function () {
+            .each(function (d, id) {
                 const cx = d3.select(this).attr("cx");
                 const cy = d3.select(this).attr("cy");
 
                 // Check if the circle is within the brushed area
                 const isBrushed = selection[0][0] <= cx && selection[1][0] >= cx &&
                                   selection[0][1] <= cy && selection[1][1] >= cy;
-
+                                  
                 d3.select(this).style('fill', isBrushed ? 'blue' : 'gray');
             });
     }
