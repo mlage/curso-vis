@@ -70,7 +70,7 @@ export async function loadChart(data, margens = { left: 50, right: 25, top: 25, 
         .extent([[0, 0], [width, height]])
         .on("start brush end", brushed);
 
-        cGroup.append("g")
+    cGroup.append("g")
         .attr("id", "brushGroup")
         .attr("class", "brush")
         .call(brush)
