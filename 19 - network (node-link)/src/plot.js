@@ -10,18 +10,18 @@ export async function loadChart(nodes, links, margens = { left: 50, right: 25, t
         return;
     }
 
-    const width  = +svg.node().getBoundingClientRect().width  - margens.left - margens.right;
-    const height = +svg.node().getBoundingClientRect().height - margens.top  - margens.bottom;
+    const width = +svg.node().getBoundingClientRect().width - margens.left - margens.right;
+    const height = +svg.node().getBoundingClientRect().height - margens.top - margens.bottom;
 
-    const filteredLinks = links.filter(d => d.source < nodes.length && d.target < nodes.length && d.count > 0);
-    console.log("Filtered Links:", filteredLinks);
+    const filteredLinks = JSON.parse(JSON.stringify(links)).filter(d => d.source < nodes.length && d.target < nodes.length && d.count > 0);
+    const copyNodes = JSON.parse(JSON.stringify(nodes));
 
     const countExtent = d3.extent(filteredLinks, function (d) { return d.count; });
-    const mapStroke = d3.scaleLog().domain(countExtent).range([0, 1]);
+    const mapStroke = d3.scaleLog().domain(countExtent).range([0, 1.5]);
 
     // Create a simulation with several forces.
-    d3.forceSimulation(nodes)
-        .force("link", d3.forceLink(filteredLinks).strength(d => d.count / 10000))
+    d3.forceSimulation(copyNodes)
+        .force("link", d3.forceLink(filteredLinks).strength(d => mapStroke(d.count) / 100))
         .force("charge", d3.forceManyBody().distanceMax(200))
         .force("center", d3.forceCenter(width / 2, height / 2))
         .on("tick", ticked);
@@ -30,7 +30,7 @@ export async function loadChart(nodes, links, margens = { left: 50, right: 25, t
     const cGroup = selection.join('g')
         .attr('id', 'group');
 
-        // Add a line for each link, and a circle for each node.
+    // Add a line for each link, and a circle for each node.
     link = cGroup
         .selectAll()
         .data(filteredLinks)
@@ -41,15 +41,15 @@ export async function loadChart(nodes, links, margens = { left: 50, right: 25, t
 
     node = cGroup
         .selectAll()
-        .data(nodes)
+        .data(copyNodes)
         .join("circle")
         .attr("stroke", "#fff")
         .attr("stroke-width", 1.5)
         .attr("fill", "dodgerblue")
         .attr("r", 5);
 
-    node.append("title")
-        .text(d => d.id);
+    console.log("Copy Link:", filteredLinks);
+    console.log("Nodes:", links);
 
     d3.select('#group')
         .attr('transform', `translate(${margens.left}, ${margens.top})`);
@@ -69,7 +69,7 @@ export function clearChart() {
         .remove();
 }
 
-  function ticked() {
+function ticked() {
     link
         .attr("x1", d => d.source.x)
         .attr("y1", d => d.source.y)
@@ -79,4 +79,4 @@ export function clearChart() {
     node
         .attr("cx", d => d.x)
         .attr("cy", d => d.y);
-  }
+}

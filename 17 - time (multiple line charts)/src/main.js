@@ -25,13 +25,12 @@ window.onload = async () => {
     await taxi.init();
     await taxi.loadTaxi();
 
-        const sql = `
-            SELECT weekday(lpep_pickup_datetime) as day, month(lpep_pickup_datetime) as month, count(*) as count
-            FROM taxi_2023
-            GROUP BY day, month
-            ORDER BY day, month;
-        `
-
+    const sql = `
+        SELECT weekday(lpep_pickup_datetime) as day, month(lpep_pickup_datetime) as month, count(*) as count
+        FROM taxi_2023
+        GROUP BY day, month
+        ORDER BY day, month;
+    `
 
     const data = await taxi.query(sql);
     console.log(data);

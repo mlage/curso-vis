@@ -29,7 +29,7 @@ window.onload = async () => {
     const data = await response.json();
     const nodes = data.features.map(n => {
         return {
-            id: n.id
+            id: n.properties.zone
         }
     });
 

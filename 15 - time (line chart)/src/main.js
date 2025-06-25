@@ -2,7 +2,7 @@ import { Taxi } from "./taxi";
 import { loadChart, clearChart } from './plot';
 
 function callbacks(data) {
-    const loadBtn  = document.querySelector('#loadBtn');
+    const loadBtn = document.querySelector('#loadBtn');
     const clearBtn = document.querySelector('#clearBtn');
 
     if (!loadBtn || !clearBtn) {
@@ -25,12 +25,11 @@ window.onload = async () => {
     await taxi.init();
     await taxi.loadTaxi();
 
-        const sql = `
+    const sql = `
             SELECT day(lpep_pickup_datetime) as day, count(*) as count
             FROM taxi_2023
             GROUP BY day;
         `
-
 
     const data = await taxi.query(sql);
     console.log(data);

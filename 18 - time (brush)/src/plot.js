@@ -14,7 +14,6 @@ export async function loadChart(data, margens = { left: 50, right: 25, top: 25, 
 
     // ---- Escalas
     const filteredData = data.filter(d => (new Date(d.day)).getFullYear() === 2023).sort((a, b) => new Date(a.day) - new Date(b.day));
-
     console.log("Filtered Data:", filteredData);
 
     const distExtent = d3.extent(filteredData, function (d) { return d.day; });
@@ -42,7 +41,6 @@ export async function loadChart(data, margens = { left: 50, right: 25, top: 25, 
         .attr('transform', `translate(${margens.left}, ${margens.top})`)
         .call(yAxis);
 
-
     // ---- Paths
     const selection = svg.selectAll('#group').data([0]);
     const cGroup = selection.join('g')
@@ -52,7 +50,6 @@ export async function loadChart(data, margens = { left: 50, right: 25, top: 25, 
         .data([filteredData]);
 
     paths.join('path')
-        .datum(d => d)
         .attr("fill", "none")
         .attr("stroke", "steelblue")
         .attr("stroke-width", 1.5)
@@ -65,7 +62,7 @@ export async function loadChart(data, margens = { left: 50, right: 25, top: 25, 
 
     // Add brushing
     const brush = d3.brushX()
-        .filter(event => { console.log(event); return (event.metaKey || event.target.__data__.type !== "overlay") })
+        .filter(event => { return (event.metaKey || event.target.__data__.type !== "overlay") })
         .extent([[0, 0], [width, height]])
         .on("start brush end", brushed);
 
@@ -98,6 +95,8 @@ function brushed(event) {
     if (selection !== null) {
         const start = mapX.invert(selection[0]);
         const end = mapX.invert(selection[1]);
+
+        console.log("selection:", selection);
         console.log("Brushed selection:", start, end);
     }
 }

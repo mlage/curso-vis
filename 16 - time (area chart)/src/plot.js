@@ -8,12 +8,9 @@ export async function loadChart(data, margens = { left: 50, right: 25, top: 25, 
         return;
     }
 
-
-    // Add the line
-
     // ---- Escalas
-    const dayExtent = d3.extent(data, function (d) { return Number(d.day); });
-    const mapX = d3.scaleLinear().domain(dayExtent).range([0, +svg.style("width").split("px")[0] - margens.left - margens.right]);
+    const distExtent = data.map( (d) => { return Number(d.day) } );
+    const mapX = d3.scalePoint().domain(distExtent).range([0, +svg.style("width").split("px")[0] - margens.left - margens.right]);
 
     const countExtent = d3.extent(data, d => Number(d.count) );
     const mapY = d3.scaleLinear().domain(countExtent).range([+svg.style("height").split("px")[0] - margens.bottom - margens.top, 0]);
@@ -37,7 +34,6 @@ export async function loadChart(data, margens = { left: 50, right: 25, top: 25, 
         .attr('transform', `translate(${margens.left}, ${margens.top})`)
         .call(yAxis);
 
-
     // ---- Paths
     const selection = svg.selectAll('#group').data([0]);
     const cGroup = selection.join('g')
@@ -47,9 +43,8 @@ export async function loadChart(data, margens = { left: 50, right: 25, top: 25, 
         .data([data]);
 
     paths.join('path')
-        .datum(d => d)
         .attr("fill", "steelblue")
-        .attr("stroke", "#1155FF")
+        .attr("stroke", "#1155aa")
         .attr("stroke-width", 1.5)
         .attr("d", d3.area()
             .x(function (d) { return mapX( Number(d.day) ) })
@@ -58,7 +53,6 @@ export async function loadChart(data, margens = { left: 50, right: 25, top: 25, 
         )
     d3.select('#group')
         .attr('transform', `translate(${margens.left}, ${margens.top})`);
-
 }
 
 export function clearChart() {

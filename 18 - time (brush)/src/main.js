@@ -25,12 +25,11 @@ window.onload = async () => {
     await taxi.init();
     await taxi.loadTaxi();
 
-        const sql = `
-            SELECT date_trunc('day', lpep_pickup_datetime) as day, count(*) as count
-            FROM taxi_2023
-            GROUP BY day;
-        `
-
+    const sql = `
+        SELECT date_trunc('day', lpep_pickup_datetime) as day, count(*) as count
+        FROM taxi_2023
+        GROUP BY day;
+    `
 
     const data = await taxi.query(sql);
     console.log(data);

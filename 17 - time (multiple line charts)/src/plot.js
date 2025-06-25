@@ -12,7 +12,7 @@ export async function loadChart(data, margens = { left: 50, right: 25, top: 25, 
     const dayExtent = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']; 
     const mapX = d3.scalePoint().domain(dayExtent).range([0, +svg.style("width").split("px")[0] - margens.left - margens.right]);
 
-    const series = Array(6);
+    const series = new Array(6);
     const filteredData = data.filter(d => (Number(d.month) <= 6) );
 
     filteredData.forEach(d => {
@@ -23,11 +23,13 @@ export async function loadChart(data, margens = { left: 50, right: 25, top: 25, 
         series[month].push({ day: Number(d.day), count: Number(d.count) });
     });
 
+    console.log(series);
+
     const countExtent = d3.extent(filteredData, d => Number(d.count) );
     const mapY = d3.scaleLinear().domain(countExtent).range([+svg.style("height").split("px")[0] - margens.bottom - margens.top, 0]);
 
     const cExtent = [0, 1, 2, 3, 4, 5];
-    const mapC = d3.scaleOrdinal(d3.schemeObservable10).domain(cExtent);
+    const mapC = d3.scaleOrdinal(d3.schemeTableau10).domain(cExtent);
 
     // ---- Eixos
     const xAxis = d3.axisBottom(mapX);
@@ -48,7 +50,6 @@ export async function loadChart(data, margens = { left: 50, right: 25, top: 25, 
         .attr('transform', `translate(${margens.left}, ${margens.top})`)
         .call(yAxis);
 
-
     // ---- Paths
     const selection = svg.selectAll('#group').data([0]);
     const cGroup = selection.join('g')
@@ -58,17 +59,15 @@ export async function loadChart(data, margens = { left: 50, right: 25, top: 25, 
         .data(series);
 
     paths.join('path')
-        .datum(d => d)
         .attr("fill", "none")
         .attr("stroke", (d, id) => mapC(id))
-        .attr("stroke-width", 1.5)
+        .attr("stroke-width", 2)
         .attr("d", d3.line()
             .x(function (d) { return mapX( dayExtent[d.day] ) })
             .y(function (d) { return mapY( d.count) })
         )
     d3.select('#group')
         .attr('transform', `translate(${margens.left}, ${margens.top})`);
-
 }
 
 export function clearChart() {
