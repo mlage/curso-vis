@@ -15,7 +15,6 @@ function callbacks(data) {
         await loadChart(data, colorDrop.value);
     });
 
-
     colorDrop.addEventListener('change', async () => {
         clearChart();
         await loadChart(data, colorDrop.value);

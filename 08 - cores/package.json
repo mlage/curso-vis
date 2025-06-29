@@ -9,9 +9,8 @@
         "preview": "vite preview"
     },
     "dependencies": {
-        "@duckdb/duckdb-wasm": "^1.29.0",
         "d3": "^7.9.0",
-        "d3js-vis": "file:"
+        "@duckdb/duckdb-wasm": "^1.29.0"
     },
     "devDependencies": {
         "vite": "^6.3.5"
