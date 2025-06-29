@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Análise Interativa de Pedidos de Restaurantes</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <header>
+        <h1>Análise Interativa de Pedidos de Restaurantes</h1>
+    </header>
+
+    <div class="main-container">
+        <div class="chart-container">
+            <div class="chart-wrapper">
+                <h2>Distância vs. Valor do Pedido</h2>
+                <svg id="chart01"></svg>
+            </div>
+            <div class="chart-wrapper">
+                <h2>Valor do Pedido vs. Gorjeta</h2>
+                <svg id="chart02"></svg>
+            </div>
+        </div>
+
+        <div class="controls-container">
+            <div id="legend-container">
+                <h3>Legenda (Tipo de Cozinha)</h3>
+                <svg id="legend"></svg>
+            </div>
+            <div class="button-container">
+                <button id="loadBtn">Carregar Dados</button>
+                <button id="clearBtn">Limpar Gráficos</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="tooltip" class="tooltip" style="opacity:0;"></div>
+
+    <main class="analysis-container">
+        <section>
+            <h2>1. Discussão sobre as Escolhas de Design</h2>
+            <p>O design desta visualização foi fundamentado no princípio de "visão geral primeiro, zoom e filtros depois, detalhes sob demanda" (Shneiderman's Mantra). Optamos por um sistema de <strong>gráficos de dispersão duplos e vinculados</strong> (linked scatter plots) por sua eficácia em revelar correlações e padrões entre múltiplas variáveis quantitativas.</p>
+            <ul>
+                <li><strong>Codificação Visual:</strong> Posição (eixos X e Y) foi usada para as principais variáveis quantitativas (`distância`, `valor`, `gorjeta`). A <strong>cor</strong> foi usada para a variável categórica `TipoCozinhaID`, permitindo uma segmentação imediata dos dados. O <strong>tamanho</strong> do círculo representa o `numero_de_itens`, adicionando outra dimensão de análise sem sobrecarregar a visualização.</li>
+                <li><strong>Interatividade:</strong>
+                    <ul>
+                        <li>O <strong>Tooltip (detalhes sob demanda)</strong> resolve o problema de sobrecarga de informação, fornecendo dados precisos de um pedido específico apenas quando o usuário demonstra interesse (hover).</li>
+                        <li>O <strong>Brushing e Linking (zoom e filtro)</strong> é a interação principal. Permite que o usuário selecione um subconjunto de dados em um contexto (ex: pedidos de longa distância) e veja como esse mesmo subconjunto se comporta em outro contexto (ex: sua relação valor vs. gorjeta). Isso facilita a descoberta de padrões complexos e a formulação de hipóteses.</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>2. Tarefas e Perguntas de Pesquisa</h2>
+            <p>A construção do sistema foi orientada pelas seguintes perguntas de análise:</p>
+            <ol>
+                <li><strong>Qual a relação entre o valor total do pedido e a distância da entrega?</strong> Pedidos mais caros estão associados a entregas mais distantes?</li>
+                <li><strong>Pedidos de maior valor recebem gorjetas maiores?</strong> Existe uma correlação direta e forte entre o valor pago e a gorjeta dada ao entregador?</li>
+                <li><strong>Existem tipos de cozinha que se destacam?</strong> Algum tipo de cozinha gera pedidos com valores consistentemente mais altos ou distâncias maiores? A cor nos gráficos ajuda a responder isso.</li>
+                <li><strong>Pedidos com mais itens têm um comportamento diferente?</strong> Eles são mais caros? São para locais mais distantes? O tamanho dos pontos ajuda a investigar essa questão.</li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>3. Principais Resultados Obtidos</h2>
+            <p>A utilização do sistema interativo permite a obtenção de insights que seriam difíceis de extrair de dados brutos ou gráficos estáticos:</p>
+            <ul>
+                <li><strong>Análise de Correlação:</strong> O usuário pode visualizar imediatamente a natureza da correlação entre as variáveis. Por exemplo, pode-se notar uma correlação positiva moderada entre o valor do pedido e a gorjeta, mas com uma grande dispersão, indicando que outros fatores influenciam a gorjeta.</li>
+                <li><strong>Identificação de Clusters e Outliers:</strong> Ao usar a seleção (brushing), um usuário pode isolar um cluster de pedidos de alto valor no primeiro gráfico. Ao ver esses pontos destacados no segundo gráfico, ele pode descobrir se esse cluster de alto valor também corresponde a um cluster de altas gorjetas. Da mesma forma, outliers (ex: um pedido barato com gorjeta altíssima) tornam-se fáceis de identificar e inspecionar com o tooltip.</li>
+                <li><strong>Análise Comparativa por Categoria:</strong> Ao observar as cores, pode-se descobrir, por exemplo, que a "Cozinha Tipo 4" (ex: Japonesa) tende a ter valores de pedido mais altos, independentemente da distância. Selecionar apenas os pontos de uma cor específica permite focar a análise em um único tipo de cozinha.</li>
+                <li><strong>Geração de Hipóteses:</strong> A capacidade de explorar livremente os dados fomenta a geração de novas hipóteses. Um usuário pode notar que pedidos com muitos itens (círculos grandes) não necessariamente têm as maiores distâncias de entrega, sugerindo que grandes pedidos podem ser mais comuns para locais de trabalho ou residências próximas.</li>
+            </ul>
+        </section>
+    </main>
+
+    <script type="module" src="src/restaurante.js"></script>
+</body>
+
+</html>
