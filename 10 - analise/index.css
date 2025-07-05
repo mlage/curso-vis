@@ -1,0 +1,108 @@
+/* (Mantenha o CSS da resposta anterior, apenas ajuste o grid-template-columns) */
+:root {
+    --bg-color: #f8f9fa;
+    --card-bg-color: #ffffff;
+    --header-bg-color: #343a40;
+    --primary-text-color: #212529;
+    --secondary-text-color: #6c757d;
+    --accent-color: #007bff;
+    --accent-color-hover: #0056b3;
+    --color-dropout: #dc3545;
+    --color-graduate: #28a745;
+    --color-enrolled: #ffc107;
+    --shadow-color: rgba(0,0,0,0.075);
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--primary-text-color);
+}
+
+header {
+    background-color: var(--header-bg-color);
+    color: white;
+    padding: 1rem 2rem;
+    text-align: center;
+}
+header h1 { margin: 0; }
+header p { margin: 0.5rem 0 0; opacity: 0.9; }
+
+.dashboard-container {
+    display: grid;
+    /* Layout 2x2 para os quatro gráficos */
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 1.5rem;
+    padding: 1.5rem;
+}
+
+@media (max-width: 900px) {
+    .dashboard-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.chart-card {
+    background-color: var(--card-bg-color);
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 4px 8px var(--shadow-color);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+.chart-title { margin: 0 0 0.25rem 0; font-size: 1.2rem; color: var(--header-bg-color); }
+.chart-subtitle { margin: 0 0 1rem 0; font-size: 0.9rem; color: var(--secondary-text-color); border-bottom: 1px solid #eee; padding-bottom: 0.75rem; }
+.chart-card svg { width: 100%; height: 350px; flex-grow: 1; }
+
+.controls-container { text-align: center; padding: 0 1.5rem 1.5rem 1.5rem; }
+#resetFiltersBtn { padding: 0.8rem 1.5rem; font-size: 1rem; border: none; border-radius: 5px; cursor: pointer; background-color: var(--secondary-text-color); color: white; transition: background-color 0.3s; }
+#resetFiltersBtn:hover { background-color: #5a6268; }
+
+.axis path, .axis line { fill: none; stroke: #ccc; shape-rendering: crispEdges; }
+.axis text { font-size: 0.8em; fill: var(--secondary-text-color); }
+.bar:hover { stroke: #333; stroke-width: 1px; }
+
+.tooltip { position: absolute; text-align: left; padding: 8px; font: 12px sans-serif; background: rgba(0,0,0,0.8); color: white; border: 0; border-radius: 8px; pointer-events: none; opacity: 0; transition: opacity 0.2s; }
+.analysis-container { padding: 1rem 2rem 2rem 2rem; max-width: 960px; margin: 1rem auto; background-color: var(--card-bg-color); border-radius: 8px; border: 1px solid #dee2e6; box-shadow: 0 2px 4px var(--shadow-color); }
+.analysis-container h2 { color: var(--header-bg-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 0.5rem; }
+.analysis-container section { margin-bottom: 2rem; }
+
+/* ... (todo o CSS anterior) ... */
+
+/* ESTILOS PARA A NOVA LEGENDA */
+.legend-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 15px;
+    margin-top: auto; /* Empurra a legenda para o fundo do card */
+}
+
+.legend-container h4 {
+    margin: 0 0 5px 0;
+    font-size: 0.9em;
+    color: var(--secondary-text-color);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+    font-size: 0.8em;
+}
+
+.legend-swatch {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    margin-right: 5px;
+}
+
+.legend-label {
+    color: var(--primary-text-color);
+}

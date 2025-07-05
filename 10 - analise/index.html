@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Análise de Evasão e Sucesso Acadêmico</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <header>
+        <h1>Análise de Evasão e Sucesso Acadêmico 🎓</h1>
+        <p>Identificando os fatores que influenciam a trajetória dos estudantes.</p>
+    </header>
+
+    <div class="dashboard-container">
+        <div class="chart-card" id="card-donut">
+            <h2 class="chart-title">Visão Geral: Qual o resultado dos alunos?</h2>
+            <div class="chart-subtitle">Distribuição por Status Final (Clique para filtrar)</div>
+            <svg id="chart-donut"></svg>
+        </div>
+
+        <div class="chart-card" id="card-density">
+            <h2 class="chart-title">Desempenho: Qual o impacto das notas iniciais?</h2>
+            <div class="chart-subtitle">Distribuição de Notas do 1º Semestre</div>
+            <svg id="chart-density"></svg>
+        </div>
+
+        <div class="chart-card" id="card-bargroup">
+            <h2 class="chart-title">Socioeconômico: Bolsa de estudos influencia?</h2>
+            <div class="chart-subtitle">Proporção de Bolsistas por Status do Aluno</div>
+            <svg id="chart-bargroup"></svg>
+        </div>
+        
+        <div class="chart-card" id="card-scatter">
+            <h2 class="chart-title">Histórico: Qual a relação entre as notas de entrada?</h2>
+            <div class="chart-subtitle">Nota de Admissão vs. Nota da Qualificação Anterior</div>
+            <svg id="chart-scatter"></svg>
+        </div>
+    </div>
+    
+    <div class="controls-container">
+        <button id="resetFiltersBtn">Limpar Filtro e Ver Todos os Alunos</button>
+    </div>
+
+    <div id="tooltip" class="tooltip" style="opacity:0;"></div>
+
+    <main class="analysis-container">
+        </main>
+
+    <script type="module" src="src/analise_alunos.js"></script>
+</body>
+</html>
