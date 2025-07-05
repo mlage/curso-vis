@@ -1,8 +1,8 @@
-// CORREÇÃO: Adicione esta linha que estava faltando
 import { DataManager } from "./data_manager.js";
+
 import {
     createDonutChart,
-    createDensityPlot,
+    createComparativeDensityPlot, 
     createGroupedBarChart,
     createScatterPlot
 } from './plot.js';
@@ -22,9 +22,8 @@ function applyFiltersAndRedraw() {
         filteredData = originalData.filter(d => d.target === filters.target);
     }
 
-    // Redesenha cada gráfico com os dados filtrados
     createDonutChart("#chart-donut", originalData, handleTargetClick, filters.target, targetMap);
-    createDensityPlot("#chart-density", filteredData, targetMap);
+    createComparativeDensityPlot("#chart-density", filteredData, targetMap);
     createGroupedBarChart("#chart-bargroup", filteredData, scholarshipMap, targetMap);
     createScatterPlot("#chart-scatter", filteredData, targetMap);
 }
@@ -53,11 +52,9 @@ window.onload = async () => {
         const sql = `SELECT * FROM ${tableName};`;
         const rawData = await dataManager.query(sql);
 
-        // Pré-processamento dos dados
         originalData = rawData.map(d => {
             const newRow = {};
             for (const key in d) {
-                // Lógica de limpeza de chaves mais robusta
                 const newKey = key.trim().replace(/[^a-zA-Z0-9_]/g, '_');
                 if (typeof d[key] === 'bigint') {
                     newRow[newKey] = Number(d[key]);

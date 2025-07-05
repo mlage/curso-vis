@@ -8,7 +8,6 @@ export class DataManager {
     async init(tableName = 'data_table') {
         this.db = await loadDb();
         this.conn = await this.db.connect();
-        // Aceita o nome da tabela como parâmetro para maior flexibilidade
         this.table = tableName; 
         console.log(`DataManager inicializado. A tabela será chamada: '${this.table}'`);
     }
@@ -34,13 +33,10 @@ export class DataManager {
                 throw new Error(`Falha ao buscar o arquivo: ${response.statusText}`);
             }
             
-            // Registra o arquivo no sistema de arquivos virtual do DuckDB
             await this.db.registerFileBuffer(jsonFileName, new Uint8Array(await response.arrayBuffer()));
 
-            // Usa 'IF EXISTS' para uma remoção mais segura da tabela antiga
             await this.conn.query(`DROP TABLE IF EXISTS ${this.table};`);
             
-            // Cria a nova tabela a partir do arquivo JSON carregado
             await this.conn.query(`
                 CREATE TABLE ${this.table} AS SELECT * FROM read_json_auto('${jsonFileName}');
             `);
@@ -49,7 +45,7 @@ export class DataManager {
 
         } catch (error) {
             console.error("Erro durante o carregamento dos dados:", error);
-            throw error; // Propaga o erro para que a aplicação principal possa tratá-lo
+            throw error;
         }
     }
 
@@ -62,7 +58,6 @@ export class DataManager {
             throw new Error('Sem conexão com o banco de dados. Chame init() e loadData() primeiro.');
         }
         let result = await this.conn.query(sql);
-        // Converte o resultado para um array de objetos JSON
         return result.toArray().map(row => row.toJSON());
     }
 }

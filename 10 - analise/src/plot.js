@@ -2,18 +2,15 @@ import * as d3 from 'd3';
 
 const margins = { top: 30, right: 30, bottom: 50, left: 60 };
 
-// Escalas de cores que serão usadas pelos gráficos e legendas
 export const statusColors = d3.scaleOrdinal()
     .domain(["Dropout", "Graduate", "Enrolled"])
     .range(["#dc3545", "#28a745", "#ffc107"]);
 
 export const scholarshipColors = d3.scaleOrdinal()
-    .domain([0, 1]) // 0: Não Bolsista, 1: Bolsista
+    .domain([0, 1])
     .range(['#6c757d', '#17a2b8']);
 
-
-// --- FUNÇÃO DE LEGENDA (Refatorada para desenhar dentro do SVG) ---
-function createLegend(svg, colorScale, title, textMap = null) {
+function createColorLegend(svg, colorScale, textMap = null) {
     const legend = svg.append("g")
         .attr("class", "legend")
         .attr("transform", `translate(${margins.left}, 0)`);
@@ -25,22 +22,28 @@ function createLegend(svg, colorScale, title, textMap = null) {
         .attr("transform", (d, i) => `translate(${i * 110}, 10)`);
 
     legendItems.append("rect")
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr("width", 12)
-        .attr("height", 12)
+        .attr("x", 0).attr("y", 0).attr("width", 12).attr("height", 12)
         .attr("fill", d => colorScale(d));
     
     legendItems.append("text")
-        .attr("x", 18)
-        .attr("y", 10)
+        .attr("x", 18).attr("y", 10)
         .text(d => textMap ? textMap[d] : d)
-        .style("font-size", "12px")
-        .style("fill", "#333");
+        .style("font-size", "12px").style("fill", "#333");
 }
 
+function createLineStyleLegend(svg, width) {
+    const legend = svg.append("g")
+        .attr("class", "legend-linestyle")
+        .attr("transform", `translate(${width - 200}, 10)`);
 
-// --- GRÁFICO 1: DONUT CHART (Sem legenda agora) ---
+    legend.append("line").attr("x1", 0).attr("x2", 20).attr("y1", 10).attr("y2", 10).attr("stroke", "black").attr("stroke-width", 2);
+    legend.append("text").attr("x", 25).attr("y", 10).attr("alignment-baseline", "middle").text("1º Semestre").style("font-size", "12px");
+
+    legend.append("line").attr("x1", 110).attr("x2", 130).attr("y1", 10).attr("y2", 10).attr("stroke", "black").attr("stroke-width", 2).style("stroke-dasharray", "3,3");
+    legend.append("text").attr("x", 135).attr("y", 10).attr("alignment-baseline", "middle").text("2º Semestre").style("font-size", "12px");
+}
+
+//GRAFICO 1
 export function createDonutChart(svgId, data, onSliceClick, selectedTarget, targetMap) {
     const svg = d3.select(svgId);
     svg.selectAll("*").remove();
@@ -75,12 +78,11 @@ export function createDonutChart(svgId, data, onSliceClick, selectedTarget, targ
         .style("font-size", "1.2em")
         .style("font-weight", "bold");
 
-    createLegend(svg, statusColors, "Status do Aluno", targetMap);
+    createColorLegend(svg, statusColors, targetMap);
 }
 
-
-// --- GRÁFICO 2: NOVO GRÁFICO DE DENSIDADE (Substituindo o Box Plot) ---
-export function createDensityPlot(svgId, data, targetMap) {
+//GRAFICO 2
+export function createComparativeDensityPlot(svgId, data, targetMap) {
     const svg = d3.select(svgId);
     svg.selectAll("*").remove();
 
@@ -88,61 +90,63 @@ export function createDensityPlot(svgId, data, targetMap) {
     const height = svg.node().getBoundingClientRect().height - margins.top - margins.bottom;
     const g = svg.append("g").attr("transform", `translate(${margins.left},${margins.top})`);
     
-    const x = d3.scaleLinear()
-      .domain([0, 20])
-      .range([0, width]);
+    const x = d3.scaleLinear().domain([0, 20]).range([0, width]);
     g.append("g").attr("transform", `translate(0, ${height})`).call(d3.axisBottom(x));
 
-    const y = d3.scaleLinear()
-      .range([height, 0]);
+    const y = d3.scaleLinear().range([height, 0]);
     const yAxis = g.append("g");
+    
+    const tooltip = d3.select("#tooltip");
 
-    // Função para calcular a densidade (Kernel Density Estimation)
     function kernelDensityEstimator(kernel, X) {
-        return function(V) {
-            return X.map(x => [x, d3.mean(V, v => kernel(x - v))]);
-        };
+        return V => X.map(x => [x, d3.mean(V, v => kernel(x - v))]);
     }
     function kernelEpanechnikov(k) {
-        return function(v) {
-            return Math.abs(v /= k) <= 1 ? 0.75 * (1 - v * v) / k : 0;
-        };
+        return v => Math.abs(v /= k) <= 1 ? 0.75 * (1 - v * v) / k : 0;
     }
-    const kde = kernelDensityEstimator(kernelEpanechnikov(1), x.ticks(60));
+    const kde = kernelDensityEstimator(kernelEpanechnikov(1.5), x.ticks(80));
     
-    // Calcula as densidades para cada grupo de status
-    const densities = [];
+    const allDensities = [];
     statusColors.domain().forEach(group => {
         const groupData = data.filter(d => d.target === group);
         if (groupData.length > 0) {
-            const density = kde(groupData.map(d => d.Curricular_units_1st_sem__grade_));
-            densities.push({key: group, density: density});
+            const density1 = kde(groupData.map(d => d.Curricular_units_1st_sem__grade_));
+            allDensities.push({key: group, semester: 1, density: density1});
+            const density2 = kde(groupData.map(d => d.Curricular_units_2nd_sem__grade_));
+            allDensities.push({key: group, semester: 2, density: density2});
         }
     });
 
-    // Encontra o valor máximo de densidade para ajustar o eixo Y
-    const maxDensity = d3.max(densities, d => d3.max(d.density, item => item[1]));
+    const maxDensity = d3.max(allDensities, d => d3.max(d.density, item => item[1]));
     y.domain([0, maxDensity]).nice();
-    yAxis.call(d3.axisLeft(y).ticks(5));
+    yAxis.call(d3.axisLeft(y).ticks(5).tickFormat(d3.format(".2f")));
 
-    // Desenha as linhas de densidade
     g.selectAll(".density-line")
-      .data(densities)
+      .data(allDensities)
       .join("path")
         .attr("class", "density-line")
-        .datum(d => d.density)
+        .attr("d", d => d3.line().curve(d3.curveBasis).x(p => x(p[0])).y(p => y(p[1]))(d.density))
         .attr("fill", "none")
-        .attr("stroke", (d, i) => statusColors(densities[i].key))
+        .attr("stroke", d => statusColors(d.key))
         .attr("stroke-width", 2.5)
         .attr("stroke-linejoin", "round")
-        .attr("d", d3.line().curve(d3.curveBasis).x(d => x(d[0])).y(d => y(d[1])));
+        .style("stroke-dasharray", d => d.semester === 2 ? "3,3" : "none")
+        .on("mouseover", function(event, d) {
+            d3.select(this).attr("stroke-width", 4);
+            tooltip.style("opacity", 1)
+                   .html(`${targetMap[d.key]} - ${d.semester}º Semestre`);
+        })
+        .on("mousemove", event => tooltip.style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px"))
+        .on("mouseleave", function() {
+            d3.select(this).attr("stroke-width", 2.5);
+            tooltip.style("opacity", 0);
+        });
         
-    // Adiciona a legenda ao gráfico
-    createLegend(svg, statusColors, "Status do Aluno", targetMap);
+    createColorLegend(svg, statusColors, targetMap);
+    createLineStyleLegend(svg, width);
 }
 
-
-// --- GRÁFICO 3: BARRAS COM TOOLTIP E LEGENDA ---
+//GRAFICO 3
 export function createGroupedBarChart(svgId, data, scholarshipMap, targetMap) {
     const svg = d3.select(svgId);
     svg.selectAll("*").remove();
@@ -191,7 +195,6 @@ export function createGroupedBarChart(svgId, data, scholarshipMap, targetMap) {
         .attr("y", d => y(d[1]))
         .attr("height", d => y(d[0]) - y(d[1]))
         .attr("width", x.bandwidth())
-        .attr("class", "bar")
         .on("mouseover", (event, d) => {
             const percentage = d[1] - d[0];
             const scholarshipStatus = scholarshipMap[event.target.parentElement.__data__.key];
@@ -200,12 +203,10 @@ export function createGroupedBarChart(svgId, data, scholarshipMap, targetMap) {
         .on("mousemove", event => tooltip.style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px"))
         .on("mouseleave", () => tooltip.style("opacity", 0));
         
-    // Adiciona a legenda
-    createLegend(svg, scholarshipColors, "", scholarshipMap);
+    createColorLegend(svg, scholarshipColors, scholarshipMap);
 }
 
-
-// --- GRÁFICO 4: SCATTER PLOT (Corrigido) ---
+//GRAFICO 4
 export function createScatterPlot(svgId, data, targetMap) {
     const svg = d3.select(svgId);
     svg.selectAll("*").remove();
@@ -214,7 +215,6 @@ export function createScatterPlot(svgId, data, targetMap) {
     const height = svg.node().getBoundingClientRect().height - margins.top - margins.bottom;
     const g = svg.append("g").attr("transform", `translate(${margins.left},${margins.top})`);
 
-    // CORREÇÃO: Usando a chave correta com DOIS underscores
     const x = d3.scaleLinear().domain(d3.extent(data, d => d.Previous_qualification__grade_)).nice().range([0, width]);
     const y = d3.scaleLinear().domain(d3.extent(data, d => d.Admission_grade)).nice().range([height, 0]);
     
@@ -224,17 +224,16 @@ export function createScatterPlot(svgId, data, targetMap) {
     const tooltip = d3.select("#tooltip");
 
     g.selectAll("circle").data(data).join("circle")
-        .attr("cx", d => x(d.Previous_qualification__grade_)) // CORREÇÃO AQUI
+        .attr("cx", d => x(d.Previous_qualification__grade_))
         .attr("cy", d => y(d.Admission_grade))
         .attr("r", 4)
         .attr("fill", d => statusColors(d.target))
         .style("opacity", 0.6)
         .on("mouseover", (event, d) => {
-            tooltip.style("opacity", 1).html(`Status: ${targetMap[d.target]}<br>Nota Admissão: ${d.Admission_grade}<br>Nota Anterior: ${d.Previous_qualification__grade_}`); // CORREÇÃO AQUI
+            tooltip.style("opacity", 1).html(`Status: ${targetMap[d.target]}<br>Nota Admissão: ${d.Admission_grade}<br>Nota Anterior: ${d.Previous_qualification__grade_}`);
         })
         .on("mousemove", event => tooltip.style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px"))
         .on("mouseleave", () => tooltip.style("opacity", 0));
         
-    // Adiciona a legenda
-    createLegend(svg, statusColors, "", targetMap);
+    createColorLegend(svg, statusColors, targetMap);
 }
