@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 
-const margins = { top: 30, right: 30, bottom: 50, left: 60 };
+const margins = { top: 60, right: 30, bottom: 50, left: 60 };
 
 export const statusColors = d3.scaleOrdinal()
     .domain(["Dropout", "Graduate", "Enrolled"])
@@ -13,7 +13,7 @@ export const scholarshipColors = d3.scaleOrdinal()
 function createColorLegend(svg, colorScale, textMap = null) {
     const legend = svg.append("g")
         .attr("class", "legend")
-        .attr("transform", `translate(${margins.left}, 0)`);
+        .attr("transform", `translate(${margins.left}, 0)`); 
 
     const legendItems = legend.selectAll(".legend-item")
         .data(colorScale.domain())
@@ -34,7 +34,7 @@ function createColorLegend(svg, colorScale, textMap = null) {
 function createLineStyleLegend(svg, width) {
     const legend = svg.append("g")
         .attr("class", "legend-linestyle")
-        .attr("transform", `translate(${width - 200}, 10)`);
+        .attr("transform", `translate(${margins.left}, 30)`); // Posição Y = 30 (mais abaixo)
 
     legend.append("line").attr("x1", 0).attr("x2", 20).attr("y1", 10).attr("y2", 10).attr("stroke", "black").attr("stroke-width", 2);
     legend.append("text").attr("x", 25).attr("y", 10).attr("alignment-baseline", "middle").text("1º Semestre").style("font-size", "12px");

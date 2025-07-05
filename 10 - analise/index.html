@@ -3,48 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <title>Análise de Evasão e Sucesso Acadêmico</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <header>
-        <h1>Análise de Evasão e Sucesso Acadêmico 🎓</h1>
-        <p>Identificando os fatores que influenciam a trajetória dos estudantes.</p>
+
+    <header class="main-header">
+        <h1>Análise Preditiva da Trajetória Estudantil</h1>
+        <p>Compreendendo os fatores que levam ao sucesso e à evasão no ensino superior.</p>
     </header>
 
-    <div class="dashboard-container">
-        <div class="chart-card" id="card-donut">
-            <h2 class="chart-title">Visão Geral: Qual o resultado dos alunos?</h2>
-            <div class="chart-subtitle">Distribuição por Status Final (Clique para filtrar)</div>
-            <svg id="chart-donut"></svg>
+    <main class="content-wrapper">
+        <section class="intro-section">
+            <h2>O Desafio: Reduzindo a Evasão Acadêmica</h2>
+            <p>A evasão no ensino superior é um desafio complexo que impacta estudantes, instituições e a sociedade. Entender os sinais de alerta precoces é fundamental para criar intervenções eficazes. Este painel analítico explora dados para responder à pergunta central:</p>
+            <p class="central-question">Quais fatores diferenciam os alunos que se formam dos que evadem?</p>
+        </section>
+
+        <section class="data-source-section">
+            <h2>Sobre os Dados: Um Retrato da Educação Portuguesa</h2>
+            <p>
+                Os dados utilizados nesta análise são provenientes de uma instituição de ensino superior em Portugal e reúnem informações demográficas, socioeconômicas e acadêmicas de <strong>4.424 estudantes</strong>. O objetivo é apoiar a identificação precoce de alunos em risco de evasão, permitindo a criação de estratégias de retenção mais eficazes.
+            </p>
+            <div class="stats-container">
+                <div class="stat-item"><span>4.424</span> Alunos</div>
+                <div class="stat-item"><span>36</span> Variáveis</div>
+                <div class="stat-item"><span>3</span> Resultados (Formado, Evasão, Matriculado)</div>
+            </div>
+            <a href="https://www.kaggle.com/datasets/adilshamim8/predict-students-dropout-and-academic-success/data" target="_blank" class="kaggle-link">
+                Acesse o Dataset Completo no Kaggle
+            </a>
+        </section>
+
+        <div class="controls-container">
+            <button id="resetFiltersBtn">Ver Todos os Alunos / Limpar Filtro</button>
         </div>
 
-        <div class="chart-card" id="card-density">
-            <h2 class="chart-title">Desempenho: Qual o impacto das notas iniciais?</h2>
-            <div class="chart-subtitle">Distribuição de Notas do 1º Semestre e 2º Semestre</div>
-            <svg id="chart-density"></svg> 
+        <div class="dashboard-container">
+            <div class="chart-card" id="card-donut">
+                <h3 class="chart-title">1. Panorama Geral do Cenário</h3>
+                <div class="chart-subtitle">Qual a proporção de cada resultado acadêmico?</div>
+                <svg id="chart-donut"></svg>
+            </div>
+
+            <div class="chart-card" id="card-density">
+                <h3 class="chart-title">2. A Trajetória de Desempenho</h3>
+                <div class="chart-subtitle">Como a distribuição de notas evolui entre os semestres?</div>
+                <svg id="chart-density"></svg>
+            </div>
+
+            <div class="chart-card" id="card-bargroup">
+                <h3 class="chart-title">3. O Impacto do Apoio Financeiro</h3>
+                <div class="chart-subtitle">A bolsa de estudos tem um papel protetor contra a evasão?</div>
+                <svg id="chart-bargroup"></svg>
+            </div>
+            
+            <div class="chart-card" id="card-scatter">
+                <h3 class="chart-title">4. O Perfil de Entrada dos Alunos</h3>
+                <div class="chart-subtitle">A nota de admissão é um indicador definitivo de sucesso?</div>
+                <svg id="chart-scatter"></svg>
+            </div>
         </div>
 
-        <div class="chart-card" id="card-bargroup">
-            <h2 class="chart-title">Socioeconômico: Bolsa de estudos influencia?</h2>
-            <div class="chart-subtitle">Proporção de Bolsistas por Status do Aluno</div>
-            <svg id="chart-bargroup"></svg>
-        </div>
-        
-        <div class="chart-card" id="card-scatter">
-            <h2 class="chart-title">Histórico: Qual a relação entre as notas de entrada?</h2>
-            <div class="chart-subtitle">Nota de Admissão vs. Nota da Qualificação Anterior</div>
-            <svg id="chart-scatter"></svg>
-        </div>
-    </div>
+        <section class="conclusion-section">
+            <h2>Principais Conclusões e Ações Sugeridas</h2>
+            <div class="insights-container">
+                <div class="insight-item">
+                    <h4>Trajetória é Mais Importante que Posição</h4>
+                    <p>O indicador mais forte não é a nota absoluta, mas sua evolução. Alunos que se formam tendem a melhorar suas notas, enquanto uma queda de desempenho, mesmo para alunos aprovados, é um forte sinal de risco para evasão.</p>
+                </div>
+                <div class="insight-item">
+                    <h4>Alerta Máximo para Abandono Precoce</h4>
+                    <p>Uma grande parcela dos alunos que evadem apresenta desempenho nulo já no 1º semestre. Ações de engajamento e acompanhamento focadas nos primórdios do curso são cruciais.</p>
+                </div>
+                <div class="insight-item">
+                    <h4>Fatores Socioeconômicos Relevantes</h4>
+                    <p>A análise sugere que ser bolsista está associado a uma menor taxa de evasão. Políticas de auxílio estudantil e apoio financeiro são ferramentas eficazes na retenção de alunos.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
     
-    <div class="controls-container">
-        <button id="resetFiltersBtn">Limpar Filtro e Ver Todos os Alunos</button>
-    </div>
-
     <div id="tooltip" class="tooltip" style="opacity:0;"></div>
-
-    <main class="analysis-container">
-        </main>
+    
+    <footer>
+        <p>Visualização de Dados - Analise de Dados Estudantis - Julho, 2025</p>
+    </footer>
 
     <script type="module" src="src/analise_alunos.js"></script>
 </body>
