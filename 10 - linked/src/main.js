@@ -36,7 +36,7 @@ window.onload = async () => {
             fare_amount
         FROM
             taxi_2023
-        LIMIT ${20}
+        LIMIT ${50}
     `;
 
     const data = await taxi.query(sql);

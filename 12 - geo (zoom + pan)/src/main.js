@@ -9,7 +9,6 @@ function callbacks(data) {
     }
 
     loadBtn.addEventListener('click', async () => {
-        clearMap();
         await loadMap(data);
     });
 

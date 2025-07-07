@@ -95,7 +95,7 @@ export function clearChart(id) {
         .selectAll('*')
         .remove();
 
-    d3.select('#brushGroup').remove();
+    d3.select(id).select('#brushGroup').remove();
 }
 
 // Function that is triggered when brushing is performed

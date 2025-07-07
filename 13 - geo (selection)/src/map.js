@@ -15,11 +15,11 @@ export async function loadMap(geojson, margens = { left: 5, right: 5, top: 5, bo
     let projection = d3.geoMercator().
         fitExtent([[0, 0], [width, height]], geojson);
 
-    let path = d3.geoPath()
+    let pathBuilder = d3.geoPath()
         .projection(projection);
 
     const mGroup = svg.selectAll('#group')
-        .data([0])
+        .data([''])
         .join('g')
         .attr('id', 'group')
         .attr('transform', `translate(${margens.left}, ${margens.top})`);
@@ -27,7 +27,7 @@ export async function loadMap(geojson, margens = { left: 5, right: 5, top: 5, bo
     mGroup.selectAll('path')
         .data(geojson.features)
         .join('path')
-        .attr('d', path)
+        .attr('d', pathBuilder)
         .style('fill', 'lightgray')
         .style('stroke', 'black')
         .on('click', handleClick);
@@ -36,7 +36,6 @@ export async function loadMap(geojson, margens = { left: 5, right: 5, top: 5, bo
     const zoom = d3.zoom()
         .scaleExtent([1, 8])
         .on('zoom', handleZoom);
-
     svg.call(zoom);
 }
 
@@ -54,8 +53,8 @@ function handleZoom({ transform }) {
 
 function handleClick(event) {
     if (event.metaKey && event.target.tagName === 'path') {
-
-        d3.selectAll('#group path')
+        d3.select('#group')
+            .selectAll('path')
             .style('fill', 'lightgray');
 
         d3.select(this)
