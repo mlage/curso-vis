@@ -5,9 +5,27 @@ export class Taxi {
     async init() {
         this.db = await loadDb();
         this.conn = await this.db.connect();
+        this.conn.query('INSTALL spatial; LOAD spatial;');
 
         this.color = "green";
         this.table = 'taxi_2023';
+
+        this.regions = "taxi-zones-proj.geojson";
+        this.regionsTable = 'taxi_zones';
+    }
+
+    async loadGeojson() {
+        if (!this.db || !this.conn)
+            throw new Error('Database not initialized. Please call init() first.');
+
+        const res = await fetch(this.regions);
+        const geojson = await res.json();
+
+        await this.db.registerFileBuffer('regions_buff', new TextEncoder().encode(JSON.stringify(geojson)));
+
+        await this.conn.query(`
+            CREATE TABLE ${this.regionsTable} AS SELECT * FROM ST_Read('${this.regions}');
+        `);
     }
 
     async loadTaxi(months = 6) {

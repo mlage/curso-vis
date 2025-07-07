@@ -7,7 +7,22 @@ export async function initTaxi() {
     console.log('Initializing Taxi...');
     await taxi.init();
     await taxi.loadTaxi();
+    
     console.log('Taxi initialized');
+}
+
+export async function getRegions() {
+    console.log('Loading GeoJSON...');
+    await taxi.loadGeojson();
+    console.log('GeoJSON loaded');
+
+    const sql = `
+        SELECT ST_AsGeoJSON(geom) AS geojson
+        FROM taxi_zones;
+    `;
+
+    const data = await taxi.query(sql);
+    return data.map(d => JSON.parse(d.geojson));
 }
 
 export async function loadMap(geojson, margens = { left: 5, right: 5, top: 5, bottom: 5 }) {

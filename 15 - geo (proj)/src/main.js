@@ -1,4 +1,4 @@
-import { loadMap, clearMap, initTaxi } from './map';
+import { loadMap, clearMap, initTaxi, getRegions } from './map';
 
 function callbacks(data) {
     const loadBtn   = document.querySelector('#loadBtn');
@@ -19,10 +19,11 @@ function callbacks(data) {
 }
 
 window.onload = async () => {
-    const response = await fetch('taxi-zones.json');
-    const neighs = await response.json();
+    await initTaxi();
+    const neighs = await getRegions();
+
+    console.log('Loaded neighborhoods:', neighs);
 
     callbacks(neighs);
-    initTaxi();
 };
 
