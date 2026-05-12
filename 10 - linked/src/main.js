@@ -10,9 +10,6 @@ function callbacks(data) {
     }
 
     loadBtn.addEventListener('click', async () => {
-        clearChart('#chart01');
-        clearChart('#chart02');
-
         await loadChart('#chart01', data, ['trip_distance', 'fare_amount']);
         await loadChart('#chart02', data, ['trip_distance', 'tip_amount']);
     });
@@ -34,6 +31,7 @@ window.onload = async () => {
             trip_distance,
             tip_amount,
             fare_amount
+            
         FROM
             taxi_2023
         LIMIT ${50}

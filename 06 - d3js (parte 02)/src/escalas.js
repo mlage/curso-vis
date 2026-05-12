@@ -20,10 +20,12 @@ export async function loadChart(margens = { left: 25, right: 25, top: 25, bottom
     console.log(data);
 
     const distExtent = d3.extent(data, d => d.trip_distance);
-    const mapX = d3.scaleLinear().domain(distExtent).range([0, +svg.style("width").split("px")[0] - margens.left - margens.right]);
+    const newW = svg.node().getBoundingClientRect().width - margens.left - margens.right;
+    const mapX = d3.scaleLinear().domain(distExtent).range([0, newW]);
 
     const tipExtent = d3.extent(data, d => d.tip_amount);
-    const mapY = d3.scaleLinear().domain(tipExtent).range([+svg.style("height").split("px")[0] - margens.bottom - margens.top, 0]);
+    const newH = svg.node().getBoundingClientRect().height - margens.top - margens.bottom;
+    const mapY = d3.scaleLinear().domain(tipExtent).range([newH, 0]);
 
     const selection = d3.select('#group')
         .selectAll('circle')
@@ -51,4 +53,10 @@ export function clearChart() {
     d3.select('#group')
         .selectAll('circle')
         .remove();
+
+    // d3.select('#group')
+    //   .selectAll('circle')
+    //   .data([])
+    //   .exit()
+    //   .remove();
 }

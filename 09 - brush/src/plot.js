@@ -24,7 +24,6 @@ export async function loadChart(data, margens = { left: 50, right: 25, top: 25, 
         .data([0])
         .join('g')
         .attr('id', 'axisX')
-        .attr('class', 'x axis')
         .attr('transform', `translate(${margens.left}, ${+svg.node().getBoundingClientRect().height - margens.bottom})`)
         .call(xAxis);
 
@@ -33,7 +32,6 @@ export async function loadChart(data, margens = { left: 50, right: 25, top: 25, 
         .data([0])
         .join('g')
         .attr('id', 'axisY')
-        .attr('class', 'y axis')
         .attr('transform', `translate(${margens.left}, ${margens.top})`)
         .call(yAxis);
 
@@ -44,20 +42,9 @@ export async function loadChart(data, margens = { left: 50, right: 25, top: 25, 
         .attr('id', 'chartGroup')
         .attr('transform', `translate(${margens.left}, ${margens.top})`);
 
-    const circles = cGroup.selectAll('circle')
-        .data(data);
-
-    circles.enter()
-        .append('circle')
-        .attr('cx', d => mapX(d.trip_distance))
-        .attr('cy', d => mapY(d.tip_amount))
-        .attr('r', 6)
-        .style('fill', 'gray');
-
-    circles.exit()
-        .remove();
-
-    circles
+    cGroup.selectAll('circle')
+        .data(data)
+        .join('circle')
         .attr('cx', d => mapX(d.trip_distance))
         .attr('cy', d => mapY(d.tip_amount))
         .attr('r', 6)
@@ -66,15 +53,15 @@ export async function loadChart(data, margens = { left: 50, right: 25, top: 25, 
     // ---- Brush
 
     const brush = d3.brush()
-        .filter(event => { console.log(event); return (event.metaKey || event.target.__data__.type !== "overlay") })
+        .filter(event => { console.log(event); return (event.metaKey || event.target.__data__.type === "selection") })
         .extent([[0, 0], [width, height]])
         .on("start brush end", brushed);
 
-    cGroup.append("g")
+    cGroup.selectAll('#brushGroup')
+        .data([0])
+        .join("g")
         .attr("id", "brushGroup")
-        .attr("class", "brush")
-        .call(brush)
-        .call(g => g.select(".overlay").style("cursor", "default"));
+        .call(brush);
 }
 
 export function clearChart() {
@@ -94,6 +81,7 @@ export function clearChart() {
 }
 
 function brushed(event) {
+    console.log(event);
     const selection = event.selection;
 
     if (selection !== null) {

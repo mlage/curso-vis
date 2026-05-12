@@ -10,7 +10,6 @@ function callbacks(data) {
     }
 
     loadBtn.addEventListener('click', async () => {
-        clearChart();
         await loadChart(data);
     });
 
@@ -31,7 +30,7 @@ window.onload = async () => {
             tip_amount
         FROM
             taxi_2023
-        LIMIT ${150}
+        LIMIT ${1050}
     `;
 
     const data = await taxi.query(sql);

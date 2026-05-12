@@ -1,7 +1,11 @@
 import * as d3 from 'd3';
 
-export async function loadChart(data, margens = { left: 50, right: 25, top: 25, bottom: 60 }) {
+let embeddingCopy = [];
+
+export async function loadChart(embedding, data, margens = { left: 50, right: 25, top: 25, bottom: 60 }) {
     const svg = d3.select('svg');
+
+    embeddingCopy = [...embedding];
 
     if (!svg) {
         return;
@@ -12,12 +16,11 @@ export async function loadChart(data, margens = { left: 50, right: 25, top: 25, 
     const height = +svg.node().getBoundingClientRect().height - margens.top  - margens.bottom;
 
     // ---- Escalas
-    const distExtent = d3.extent(data, d => d[0]);
-    const mapX = d3.scaleLinear().domain(distExtent).range([0, width]);
+    const xExtent = d3.extent(data, d => d[0]);
+    const mapX = d3.scaleLinear().domain(xExtent).range([0, width]);
 
-    const tipExtent = d3.extent(data, d => d[1]);
-    const mapY = d3.scaleLinear().domain(tipExtent).range([height, 0]);
-
+    const yExtent = d3.extent(data, d => d[1]);
+    const mapY = d3.scaleLinear().domain(yExtent).range([height, 0]);
 
     // ---- Círculos
     const cGroup = svg.selectAll('#chartGroup')
@@ -82,6 +85,9 @@ function brushed(event) {
                                   selection[0][1] <= cy && selection[1][1] >= cy;
                                   
                 d3.select(this).style('fill', isBrushed ? 'blue' : 'gray');
+                if(isBrushed) {
+                    console.log(`Circle ${JSON.stringify(embeddingCopy[id])} is brushed`);
+                }
             });
     }
 }

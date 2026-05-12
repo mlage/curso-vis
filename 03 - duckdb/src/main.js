@@ -24,17 +24,23 @@ function createTableWithInnerHTML(data) {
     }
 }
 
-window.onload = async () => {
+async function main(){
     const months = 6;
     const limit = 50;
 
     const taxi = new Taxi();
-
     await taxi.init();
+
     await taxi.loadTaxi(months);
     const data = await taxi.test(limit);
+
+    console.log(data);
 
     createTableWithInnerHTML(data);
 
     console.log('teste');
 };
+
+window.onload = async () => {
+    await main();
+}

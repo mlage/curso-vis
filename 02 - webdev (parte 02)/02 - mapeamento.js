@@ -24,12 +24,21 @@ function loadChart() {
 
     const data = buildData();
 
-    const minDistance = Math.min(...data.map(item => item.distance));
-    const maxDistance = Math.max(...data.map(item => item.distance));
-    const mapX = mapeamento(minDistance, maxDistance, 0, svg.clientWidth);
+    const distances = data.map(item => item.distance);
+    console.log(distances);
 
-    const minTip = Math.min(...data.map(item => item.tip));
-    const maxTip = Math.max(...data.map(item => item.tip));
+    const minDistance = Math.min(...distances);
+    const maxDistance = Math.max(...distances);
+
+    const mapX = mapeamento(minDistance, maxDistance, 0, svg.clientWidth);
+    console.log(mapX);
+    console.log(mapX(50));
+
+    const tips = data.map(item => item.tip);
+    console.log(tips);
+
+    const minTip = Math.min(...tips);
+    const maxTip = Math.max(...tips);
     const mapY = mapeamento(minTip, maxTip, svg.clientHeight, 0);
 
     for (let i = 0; i < data.length; i++) {

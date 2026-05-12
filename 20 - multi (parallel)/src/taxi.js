@@ -10,7 +10,7 @@ export class Taxi {
         this.table = 'taxi_2023';
     }
 
-    async loadTaxi(months = 6) {
+    async loadTaxi(months = 12) {
         if (!this.db || !this.conn)
             throw new Error('Database not initialized. Please call init() first.');
 

@@ -16,8 +16,9 @@ export async function loadChart(data, colorType, margens = { left: 50, right: 25
     const mapY = d3.scaleLinear().domain(tipExtent).range([+svg.style("height").split("px")[0] - margens.bottom - margens.top, 0]);
 
     const cExtent = colorType === '0' ? d3.extent(data, d => d.total_amount) : [...new Set(data.map(d => d.payment_type))];
-    const mapC = colorType === '0' ? d3.scaleSequential(d3.interpolatePlasma).domain(cExtent) : 
-        d3.scaleOrdinal(d3.schemeObservable10).domain(cExtent);
+
+    const mapC = colorType === '0' ? d3.scaleSequential(d3.interpolateBlues).domain(cExtent) : 
+        d3.scaleOrdinal(d3.schemePastel1).domain(cExtent);
 
     // ---- Eixos
     const xAxis  = d3.axisBottom(mapX);
@@ -25,7 +26,6 @@ export async function loadChart(data, colorType, margens = { left: 50, right: 25
 
     groupX.join('g')
         .attr('id', 'axisX')
-        .attr('class', 'x axis')
         .attr('transform', `translate(${margens.left}, ${+svg.style('height').split('px')[0] - margens.bottom})`)
         .call(xAxis);
 
@@ -34,7 +34,6 @@ export async function loadChart(data, colorType, margens = { left: 50, right: 25
 
     groupY.join('g')
         .attr('id', 'axisY')
-        .attr('class', 'y axis')
         .attr('transform', `translate(${margens.left}, ${margens.top})`)
         .call(yAxis);
 
@@ -47,7 +46,6 @@ export async function loadChart(data, colorType, margens = { left: 50, right: 25
     const circles = cGroup.selectAll('circle')
         .data(data);
 
-    
     circles.enter()
         .append('circle')
         .attr('cx', d => mapX(d.trip_distance))
@@ -66,7 +64,6 @@ export async function loadChart(data, colorType, margens = { left: 50, right: 25
 
     d3.select('#group')
         .attr('transform', `translate(${margens.left}, ${margens.top})`);
-
 }
 
 export function clearChart() {

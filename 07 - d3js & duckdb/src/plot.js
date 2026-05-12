@@ -38,12 +38,12 @@ export async function loadChart(data, margens = { left: 50, right: 25, top: 25, 
     // ---- Círculos
     const selection = svg.selectAll('#group').data([0]);
     const cGroup = selection.join('g')
-            .attr('id', 'group');
+            .attr('id', 'group')
+            .attr('transform', `translate(${margens.left}, ${margens.top})`);
 
     const circles = cGroup.selectAll('circle')
         .data(data);
 
-    
     circles.enter()
         .append('circle')
         .attr('cx', d => mapX(d.trip_distance))
@@ -57,10 +57,6 @@ export async function loadChart(data, margens = { left: 50, right: 25, top: 25, 
         .attr('cx', d => mapX(d.trip_distance))
         .attr('cy', d => mapY(d.tip_amount))
         .attr('r', 4);
-
-    d3.select('#group')
-        .attr('transform', `translate(${margens.left}, ${margens.top})`);
-
 }
 
 export function clearChart() {

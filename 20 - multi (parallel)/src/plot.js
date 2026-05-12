@@ -47,6 +47,7 @@ export async function loadChart(data, margens = { left: 50, right: 25, top: 50, 
         .attr("class", "tripPath")
         .style("fill", "none")
         .style("stroke", "#69b3a2")
+        .style("stroke-width", 1.5)
         .style("opacity", 0.5)
 
     d3.select('#group')
@@ -70,15 +71,13 @@ export async function loadChart(data, margens = { left: 50, right: 25, top: 50, 
         .each(function (key) {
             const brush = d3.brushY()
                 .extent([
-                    [-10, 0],
-                    [10, height]
+                    [-20, 0],
+                    [20, height]
                 ])
                 .on("start brush end", function (event) { brushed(event, key); });
 
             d3.select(this).call(brush);
         });
-
-
 }
 
 export function clearChart() {
@@ -92,6 +91,7 @@ export function clearChart() {
 
 function brushed(event, key) {
     const selection = event.selection;
+
     if (selection === null) {
         selections.delete(key);
     } else {
@@ -100,7 +100,6 @@ function brushed(event, key) {
     }
 
     const cGroup = d3.select('#group');
-
     cGroup.selectAll(".tripPath").each(function (d) {
         const tmp = Array.from(selections);
 
@@ -108,7 +107,9 @@ function brushed(event, key) {
             return d[k] >= min && d[k] <= max;
         });
 
-        d3.select(this).style("stroke", active ? "#69b3a2" : "#ccc");
+        d3.select(this).style("stroke", active ? "#69b3a2" : "#ccc")
+                       .style("stroke-width", active ? 1.5 : 1);
+
         if (active) {
             d3.select(this).raise();
             console.log("Active Path:", d);

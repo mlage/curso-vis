@@ -6,13 +6,13 @@ body {
   }
 
 .flex-container {
-    height: 500px;
+    /* height: 500px; */
 
     display: flex;
     background-color: DodgerBlue;
 
     /* row | column | row-reverse | column-reverse */
-    flex-direction: row;
+    flex-direction: column;
 
     /* nowrap | wrap | wrap-reverse */
     flex-wrap: nowrap;
@@ -21,7 +21,7 @@ body {
     justify-content: center; 
 
     /* flex-start | flex-end | center | baseline | stretch (other axis) */
-    align-items: center; 
+    align-items:  center; 
 }
 
 .flex-container > div {
@@ -31,5 +31,5 @@ body {
     padding: 20px;
     border-radius: 8px;
 
-    width: 200px;
+    width: 400px;
 }

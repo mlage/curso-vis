@@ -10,7 +10,6 @@ function callbacks(data) {
     }
 
     loadBtn.addEventListener('click', async () => {
-        clearChart();
         await loadChart(data);
     });
 

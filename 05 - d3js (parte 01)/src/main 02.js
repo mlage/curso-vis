@@ -41,7 +41,7 @@ class D3jsDados {
             .call(
                 ex => ex.transition(t)
                     .remove()
-            )
+            );
 
         circles
             .attr('cx', d => d.val01)
@@ -73,7 +73,7 @@ class D3jsDados {
             .attr('x', d => d.val01)
             .attr('y', d => d.val02)
             .attr('width',  d => d.val03)
-            .attr('height', d => d.val04)
+            .attr('height', d => d.val03)
     }
 
     run(circles, squares) {

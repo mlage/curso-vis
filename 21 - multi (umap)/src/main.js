@@ -3,7 +3,7 @@ import { loadChart, clearChart } from './plot';
 
 import { UMAP } from 'umap-js';
 
-function callbacks(data) {
+function callbacks(embedding, data) {
     const loadBtn = document.querySelector('#loadBtn');
     const clearBtn = document.querySelector('#clearBtn');
 
@@ -13,7 +13,7 @@ function callbacks(data) {
 
     loadBtn.addEventListener('click', async () => {
         clearChart();
-        await loadChart(data);
+        await loadChart(embedding, data);
     });
 
     clearBtn.addEventListener('click', async () => {
@@ -28,7 +28,12 @@ window.onload = async () => {
     await taxi.loadTaxi();
 
     const sql = `
-        SELECT date_trunc('day', lpep_pickup_datetime) as day, AVG(trip_distance) as avg_trip_distance, AVG(fare_amount) as avg_fare_amount, AVG(tip_amount) as avg_tip_amount, AVG(total_amount) as avg_total_amount
+        SELECT 
+        date_trunc('day', lpep_pickup_datetime) as day,
+        AVG(trip_distance) as avg_trip_distance,
+        AVG(fare_amount) as avg_fare_amount,
+        AVG(tip_amount) as avg_tip_amount,
+        AVG(total_amount) as avg_total_amount
         FROM taxi_2023
         GROUP BY day;
     `
@@ -39,6 +44,6 @@ window.onload = async () => {
     const embedding = umap.fit(data);
     console.log("UMAP Embedding:", embedding);
 
-    callbacks(embedding);
+    callbacks(data, embedding);
 };
 

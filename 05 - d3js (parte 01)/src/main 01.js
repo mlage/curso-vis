@@ -27,7 +27,6 @@ class D3js {
         return 'rgb(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ')';
     }
 
-
     run() {
         let svg = this.createSvg();
 

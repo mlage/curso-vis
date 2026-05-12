@@ -40,9 +40,15 @@ svg {
 circle {
     stroke: #006A71;
     stroke-width: "3";
-    fill: #9ACBD0;
+    /* fill: #9ACBD0; */
 }
 
 button {
     margin: 10px;
+}
+
+text.label {
+    font-size: 0.75em;
+    fill: #333333;
+    font-weight: bold;
 }

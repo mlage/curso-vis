@@ -1,4 +1,4 @@
-import { loadChart, clearChart } from './eixos';
+import { loadChart, clearChart } from './format';
 
 function main() {
     const loadBtn  = document.querySelector('#loadBtn');
@@ -9,7 +9,6 @@ function main() {
     }
 
     loadBtn.addEventListener('click', async () => {
-        clearChart();
         await loadChart();
     });
 

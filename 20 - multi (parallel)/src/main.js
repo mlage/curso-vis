@@ -26,7 +26,11 @@ window.onload = async () => {
     await taxi.loadTaxi();
 
     const sql = `
-        SELECT date_trunc('day', lpep_pickup_datetime) as day, AVG(trip_distance) as avg_trip_distance, AVG(fare_amount) as avg_fare_amount, AVG(tip_amount) as avg_tip_amount
+        SELECT 
+        date_trunc('day', lpep_pickup_datetime) as day,
+        AVG(trip_distance) as avg_trip_distance,
+        AVG(fare_amount) as avg_fare_amount,
+        AVG(tip_amount) as avg_tip_amount
         FROM taxi_2023
         GROUP BY day;
     `

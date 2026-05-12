@@ -21,7 +21,7 @@ function addCircle(item, mapX, mapY) {
     return circle;
 }
 
-function loadChart(margens = { left: 25, right: 25, top: 25, bottom: 25}) {
+function loadChart(margens = { left: 50, right: 50, top: 50, bottom: 50}) {
     const svg = document.querySelector('svg');
 
     const data = buildData();

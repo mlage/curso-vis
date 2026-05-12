@@ -33,7 +33,7 @@ export async function loadMap(geojson, margens = { left: 5, right: 5, top: 5, bo
 
     // ---- Zoom e Pan
     const zoom = d3.zoom()
-        .scaleExtent([1, 10])
+        .scaleExtent([1,10])
         .on('zoom', handleZoom);
     svg.call(zoom);
 }

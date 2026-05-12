@@ -11,17 +11,15 @@ function callbacks(data) {
     }
 
     loadBtn.addEventListener('click', async () => {
-        clearChart();
-        await loadChart(data, colorDrop.value);
-    });
-
-    colorDrop.addEventListener('change', async () => {
-        clearChart();
         await loadChart(data, colorDrop.value);
     });
 
     clearBtn.addEventListener('click', async () => {
         clearChart();
+    });
+
+    colorDrop.addEventListener('change', async () => {
+        await loadChart(data, colorDrop.value);
     });
 }
 
